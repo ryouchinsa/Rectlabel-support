@@ -1,0 +1,73 @@
+{
+  "objects" : [
+    {
+      "face" : {
+        "attributes_id_list" : [
+          "rotx_face",
+          "roty_face",
+          "rotz_face"
+        ],
+        "aspect_ratio" : -1
+      }
+    },
+    {
+      "shoes" : {
+        "attributes_id_list" : [
+          "rotx_face",
+          "roty_face",
+          "rotz_face",
+          "side"
+        ],
+        "aspect_ratio" : 1
+      }
+    }
+  ],
+  "attributes" : [
+    {
+      "id" : "rotx_face",
+      "prefix" : "x",
+      "name" : "RotX",
+      "items" : [
+        "0",
+        "45",
+        "-45",
+        "90",
+        "-90"
+      ]
+    },
+    {
+      "id" : "roty_face",
+      "prefix" : "y",
+      "name" : "RotY",
+      "items" : [
+        "0",
+        "45",
+        "-45",
+        "90",
+        "-90",
+        "135",
+        "-135",
+        "180"
+      ]
+    },
+    {
+      "id" : "rotz_face",
+      "prefix" : "z",
+      "name" : "RotZ",
+      "items" : [
+        "0",
+        "45",
+        "-45"
+      ]
+    },
+    {
+      "id" : "side",
+      "prefix" : "",
+      "name" : "Side",
+      "items" : [
+        "right",
+        "left"
+      ]
+    }
+  ]
+}
