@@ -8,6 +8,7 @@ This is the support page for "RectLabel - Labeling images for object detection" 
 - Quick zoom to existing boxes
 - Draw a box including outside the image
 - Smart guides for creating and transforming boxes
+- Support the PASCAL VOC format
 
 # ScreenShots
 [![N|Solid](https://static.rectlabel.com/waysify_app/img/json_web.jpg)](https://rectlabel.com/)
