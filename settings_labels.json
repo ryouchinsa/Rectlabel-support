@@ -69,5 +69,11 @@
         "left"
       ]
     }
-  ]
+  ],
+  "preferences" : {
+    "format_priorities" : [
+      "json",
+      "pascal_voc"
+    ]
+  }
 }
