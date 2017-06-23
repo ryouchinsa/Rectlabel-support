@@ -6,9 +6,7 @@ Found some problems?
 Post the problem to our Github issues page
 https://github.com/ryouchinsa/Rectlabel-support/issues
 
-Have questions?
-
-Send an email to support@rectlabel.com
+Have questions? Send an email to support@rectlabel.com
 
 Thank you.
 
