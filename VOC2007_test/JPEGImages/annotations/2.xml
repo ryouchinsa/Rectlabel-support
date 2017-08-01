@@ -1,0 +1,33 @@
+<annotation>
+    <folder>JPEGImages</folder>
+    <filename>2.jpg</filename>
+    <size>
+        <width>720</width>
+        <height>592</height>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>shoes-sneakers-left</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>364</xmin>
+            <ymin>454</ymin>
+            <xmax>491</xmax>
+            <ymax>591</ymax>
+        </bndbox>
+    </object>
+    <object>
+        <name>shoes-sneakers-right</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>241</xmin>
+            <ymin>412</ymin>
+            <xmax>397</xmax>
+            <ymax>589</ymax>
+        </bndbox>
+    </object>
+</annotation>
