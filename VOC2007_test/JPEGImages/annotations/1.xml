@@ -8,6 +8,9 @@
     <segmented>0</segmented>
     <object>
         <name>shoes-boots-right</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
         <bndbox>
             <xmin>282</xmin>
             <ymin>122</ymin>
