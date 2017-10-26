@@ -10,6 +10,13 @@ Have questions? Send an email to support@rectlabel.com
 
 Thank you.
 
+# Useful converters coded by our users
+We appreciate if you could code useful converters and make it public on your Github repository.
+
+We would introduce your converters here.
+
+Thank you.
+
 # Key features
 - Create a label dialog from settings
 - Settings for objects, attributes and format
