@@ -17,6 +17,8 @@ We would introduce your converters here.
 
 Thank you.
 
+- Converter to the KITTI format on Nvidia DIGITS https://github.com/softwaremill/detectnet-tests
+
 # Key features
 - Create a label dialog from settings
 - Settings for objects, attributes and format
