@@ -20,18 +20,19 @@ Thank you.
 - Converter to the KITTI format on Nvidia DIGITS https://github.com/softwaremill/detectnet-tests
 
 # Key features
+- Drawing bounding box, polygon, and cubic bezier
+- Editing points to fit the shape
 - Create a label dialog from settings
-- Settings for objects, attributes and format
-- Support the PASCAL VOC format
+- Settings for objects, attributes, and hotkeys
 - Layer order for overlapped boxes
 - Zoom in on a point
 - Quick zoom to existing boxes
-- Smart guides for creating and transforming boxes
+- Support the PASCAL VOC format
 
 # ScreenShots
-[![N|Solid](https://static.rectlabel.com/waysify_app/img/json_store.jpg)](https://rectlabel.com/)
-[![N|Solid](https://static.rectlabel.com/waysify_app/img/settings_store.jpg)](https://rectlabel.com/)
-[![N|Solid](https://static.rectlabel.com/waysify_app/img/layer_store.jpg)](https://rectlabel.com/)
-[![N|Solid](https://static.rectlabel.com/waysify_app/img/zoom_store.jpg)](https://rectlabel.com/)
-[![N|Solid](https://static.rectlabel.com/waysify_app/img/focus_store.jpg)](https://rectlabel.com/)
-[![N|Solid](https://static.rectlabel.com/waysify_app/img/guides_store.jpg)](https://rectlabel.com/)
+[![N|Solid](https://static.rectlabel.com/waysify_app/img/draw.jpg)](https://rectlabel.com/)
+[![N|Solid](https://static.rectlabel.com/waysify_app/img/edit_points.jpg)](https://rectlabel.com/)
+[![N|Solid](https://static.rectlabel.com/waysify_app/img/objects.jpg)](https://rectlabel.com/)
+[![N|Solid](https://static.rectlabel.com/waysify_app/img/layer.jpg)](https://rectlabel.com/)
+[![N|Solid](https://static.rectlabel.com/waysify_app/img/zoom.jpg)](https://rectlabel.com/)
+[![N|Solid](https://static.rectlabel.com/waysify_app/img/focus.jpg)](https://rectlabel.com/)
