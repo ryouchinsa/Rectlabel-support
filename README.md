@@ -32,6 +32,7 @@ Thank you.
 # ScreenShots
 [![N|Solid](https://static.rectlabel.com/waysify_app/img/draw.jpg)](https://rectlabel.com/)
 [![N|Solid](https://static.rectlabel.com/waysify_app/img/edit_points.jpg)](https://rectlabel.com/)
+[![N|Solid](https://static.rectlabel.com/waysify_app/img/label.jpg)](https://rectlabel.com/)
 [![N|Solid](https://static.rectlabel.com/waysify_app/img/objects.jpg)](https://rectlabel.com/)
 [![N|Solid](https://static.rectlabel.com/waysify_app/img/layer.jpg)](https://rectlabel.com/)
 [![N|Solid](https://static.rectlabel.com/waysify_app/img/zoom.jpg)](https://rectlabel.com/)
