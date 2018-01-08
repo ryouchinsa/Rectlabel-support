@@ -1,0 +1,69 @@
+{
+  "objects" : [
+    {
+      "aspect_ratio" : "",
+      "name" : "face",
+      "attributes" : [
+        "rotx",
+        "roty",
+        "rotz"
+      ],
+      "hidden" : false
+    },
+    {
+      "aspect_ratio" : "",
+      "name" : "shoes",
+      "attributes" : [
+        "rotx",
+        "roty",
+        "rotz",
+        "side"
+      ],
+      "hidden" : false
+    }
+  ],
+  "attributes" : [
+    {
+      "name" : "rotx",
+      "prefix" : "x",
+      "items" : [
+        "0",
+        "45",
+        "-45",
+        "90",
+        "-90"
+      ]
+    },
+    {
+      "name" : "roty",
+      "prefix" : "y",
+      "items" : [
+        "0",
+        "45",
+        "-45",
+        "90",
+        "-90",
+        "135",
+        "-135",
+        "180"
+      ]
+    },
+    {
+      "name" : "rotz",
+      "prefix" : "z",
+      "items" : [
+        "0",
+        "45",
+        "-45"
+      ]
+    },
+    {
+      "name" : "side",
+      "prefix" : "",
+      "items" : [
+        "right",
+        "left"
+      ]
+    }
+  ]
+}
