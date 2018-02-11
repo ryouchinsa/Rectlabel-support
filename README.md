@@ -10,9 +10,6 @@ Have questions? Send an email to support@rectlabel.com
 
 Thank you.
 
-# Useful converters coded by our users
-- Converter to the KITTI format on Nvidia DIGITS https://github.com/softwaremill/detectnet-tests
-
 # Key features
 - Drawing bounding box, polygon, and cubic bezier
 - 1-click buttons make your labeling work faster
