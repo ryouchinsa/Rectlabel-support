@@ -31,10 +31,5 @@ Thank you.
 - Support the PASCAL VOC format
 
 # ScreenShots
-[![N|Solid](https://static.rectlabel.com/waysify_app/img/draw.jpg)](https://rectlabel.com/)
-[![N|Solid](https://static.rectlabel.com/waysify_app/img/edit_points.jpg)](https://rectlabel.com/)
-[![N|Solid](https://static.rectlabel.com/waysify_app/img/1-click.jpg)](https://rectlabel.com/)
-[![N|Solid](https://static.rectlabel.com/waysify_app/img/dialog.jpg)](https://rectlabel.com/)
-[![N|Solid](https://static.rectlabel.com/waysify_app/img/objects.jpg)](https://rectlabel.com/)
-[![N|Solid](https://static.rectlabel.com/waysify_app/img/search.jpg)](https://rectlabel.com/)
-[![N|Solid](https://static.rectlabel.com/waysify_app/img/focus.jpg)](https://rectlabel.com/)
+
+
