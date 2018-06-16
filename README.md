@@ -13,7 +13,8 @@ Thank you.
 # Need data labeling services?
 We introduce some great data labeling services.
 
-Edgecase AI data labeling | Bounding Box https://www.edgecase.ai/
+- Edgecase AI data labeling | Bounding Box https://www.edgecase.ai/
+- Human in the Loop http://humanintheloop.bg
 
 Want to put your link here? Send an email to support@rectlabel.com
 
