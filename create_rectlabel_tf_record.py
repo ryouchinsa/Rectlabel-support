@@ -4,6 +4,8 @@ import os
 import glob
 
 from lxml import etree
+import numpy as np
+np.set_printoptions(threshold=np.nan)
 import PIL.Image
 import tensorflow as tf
 
@@ -16,14 +18,22 @@ flags.DEFINE_string('images_dir', '', 'Full path to the images directory.')
 flags.DEFINE_string('annotations_dir', 'annotations', '(Relative) path to annotations directory.')
 flags.DEFINE_string('output_path', '', 'Path to output TFRecord')
 flags.DEFINE_string('label_map_path', 'data/pascal_label_map.pbtxt', 'Path to label map proto')
-flags.DEFINE_boolean('ignore_difficult_instances', False, 'Whether to ignore ' 'difficult instances')
+flags.DEFINE_boolean('use_mask', False, 'Add image/object/mask to TFRecord using png images in annotations folder')
+flags.DEFINE_boolean('ignore_difficult_instances', False, 'Whether to ignore difficult instances')
 FLAGS = flags.FLAGS
 
 
-def dict_to_tf_example(data,
-                       images_dir,
-                       label_map_dict,
-                       ignore_difficult_instances=False):
+def getClassId(name, label_map_dict):
+    class_id = -1
+    for item_name, item_id in label_map_dict.items():
+        if name in item_name:
+            class_id = item_id
+            break
+    if class_id < 0:
+        raise ValueError(name + ' not found in the label map file')
+    return class_id
+
+def dict_to_tf_example(data, mask_path, images_dir, label_map_dict, use_mask, ignore_difficult_instances):
     image_path = os.path.join(images_dir, data['filename'])
     with tf.gfile.GFile(image_path, 'rb') as fid:
         encoded_jpg = fid.read()
@@ -31,6 +41,16 @@ def dict_to_tf_example(data,
     image = PIL.Image.open(encoded_jpg_io)
     if image.format != 'JPEG':
         raise ValueError('Image format not JPEG')
+
+    if use_mask:
+        print(mask_path)
+        with tf.gfile.GFile(mask_path, 'rb') as fid:
+            encoded_mask_png = fid.read()
+        encoded_png_io = io.BytesIO(encoded_mask_png)
+        mask = PIL.Image.open(encoded_png_io)
+        if mask.format != 'PNG':
+            raise ValueError('Mask format not PNG')
+        mask_np = np.asarray(mask)
 
     key = hashlib.sha256(encoded_jpg).hexdigest()
     width = int(data['size']['width'])
@@ -44,6 +64,7 @@ def dict_to_tf_example(data,
     truncated = []
     poses = []
     difficult_obj = []
+    masks = []
 
     if 'object' in data:
         for obj in data['object']:
@@ -55,12 +76,19 @@ def dict_to_tf_example(data,
             ymin.append(float(obj['bndbox']['ymin']) / height)
             xmax.append(float(obj['bndbox']['xmax']) / width)
             ymax.append(float(obj['bndbox']['ymax']) / height)
+            class_id = getClassId(obj['name'], label_map_dict)
             classes_text.append(obj['name'].encode('utf8'))
-            classes.append(label_map_dict[obj['name']])
+            classes.append(class_id)
             truncated.append(int(obj['truncated']))
             poses.append(obj['pose'].encode('utf8'))
 
-    example = tf.train.Example(features=tf.train.Features(feature={
+            if use_mask:
+                mask_remapped = (mask_np == class_id).astype(np.uint8)
+                masks.append(mask_remapped)
+                print(class_id)
+                # print(mask_remapped)
+
+    feature_dict = {
         'image/height': dataset_util.int64_feature(height),
         'image/width': dataset_util.int64_feature(width),
         'image/filename': dataset_util.bytes_feature(
@@ -79,7 +107,18 @@ def dict_to_tf_example(data,
         'image/object/difficult': dataset_util.int64_list_feature(difficult_obj),
         'image/object/truncated': dataset_util.int64_list_feature(truncated),
         'image/object/view': dataset_util.bytes_list_feature(poses),
-    }))
+    }
+
+    if use_mask:
+        encoded_mask_png_list = []
+        for mask in masks:
+            img = PIL.Image.fromarray(mask)
+            output = io.BytesIO()
+            img.save(output, format='PNG')
+            encoded_mask_png_list.append(output.getvalue())
+        feature_dict['image/object/mask'] = (dataset_util.bytes_list_feature(encoded_mask_png_list))
+
+    example = tf.train.Example(features=tf.train.Features(feature=feature_dict))
     return example
 
 
@@ -95,15 +134,14 @@ def main(_):
     annotations_dir = os.path.join(images_dir, FLAGS.annotations_dir)
 
     for idx, image_file in enumerate(image_files):
-        if idx % 1 == 0:
-            print(idx, image_file)
-        annotation_path = os.path.join(
-            annotations_dir, os.path.splitext(image_file)[0] + '.xml')
+        print(idx, image_file)
+        annotation_path = os.path.join(annotations_dir, os.path.splitext(image_file)[0] + '.xml')
+        mask_path = os.path.join(annotations_dir, os.path.splitext(image_file)[0] + '.png')
         with tf.gfile.GFile(annotation_path, 'r') as fid:
             xml_str = fid.read()
         xml = etree.fromstring(xml_str)
         data = dataset_util.recursive_parse_xml_to_dict(xml)['annotation']
-        tf_example = dict_to_tf_example(data, FLAGS.images_dir, label_map_dict, FLAGS.ignore_difficult_instances)
+        tf_example = dict_to_tf_example(data, mask_path, FLAGS.images_dir, label_map_dict, FLAGS.use_mask, FLAGS.ignore_difficult_instances)
         writer.write(tf_example.SerializeToString())
 
     writer.close()
