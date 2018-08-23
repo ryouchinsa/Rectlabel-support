@@ -22,17 +22,18 @@ Thank you.
 
 # Key features
 - Drawing bounding box, polygon, and cubic bezier
+- Export index color mask image and separated mask images
 - 1-click buttons make your labeling work faster
 - Customize the label dialog to combine with attributes
 - Settings for objects, attributes, hotkeys, and labeling fast
 - Search images whose labels include keywords
 - Layer order for overlapped boxes
-- Zoom in on a point
 - Quick zoom to existing boxes
 - Support the PASCAL VOC format
 
 # ScreenShots
 ![alt text](https://static.rectlabel.com/waysify_app/img/draw.jpg?)
+![alt text](https://static.rectlabel.com/waysify_app/img/mask.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/edit_points.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/1-click.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/dialog.jpg?)
