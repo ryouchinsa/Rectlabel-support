@@ -127,10 +127,10 @@ def main(_):
     writer = tf.python_io.TFRecordWriter(FLAGS.output_path)
     label_map_dict = label_map_util.get_label_map_dict(FLAGS.label_map_path)
     os.chdir(images_dir)
-    types = ('*.jpg', '*.jpeg')
+    file_types = ('*.jpg', '*.jpeg')
     image_files = []
-    for files in types:
-        image_files.extend(glob.glob(files))
+    for file_type in file_types:
+        image_files.extend(glob.glob(file_type))
     annotations_dir = os.path.join(images_dir, FLAGS.annotations_dir)
     for idx, image_file in enumerate(image_files):
         print(idx, image_file)
