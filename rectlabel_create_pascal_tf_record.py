@@ -21,11 +21,11 @@ from object_detection.utils import label_map_util
 
 
 flags = tf.app.flags
+flags.DEFINE_boolean('include_masks', False, 'Add image/object/mask to TFRecord using png images in annotations folder')
 flags.DEFINE_string('images_dir', '', 'Full path to the images directory.')
 flags.DEFINE_string('annotations_dir', 'annotations', '(Relative) path to annotations directory.')
 flags.DEFINE_string('label_map_path', 'data/pascal_label_map.pbtxt', 'Path to label map proto')
 flags.DEFINE_string('output_path', '', 'Path to output TFRecord')
-flags.DEFINE_boolean('include_masks', False, 'Add image/object/mask to TFRecord using png images in annotations folder')
 flags.DEFINE_boolean('ignore_difficult_instances', False, 'Whether to ignore difficult instances')
 FLAGS = flags.FLAGS
 
@@ -48,7 +48,6 @@ def dict_to_tf_example(data, annotations_dir, images_dir, label_map_dict, includ
     image = PIL.Image.open(encoded_jpg_io)
     if image.format != 'JPEG':
         raise ValueError('Image format not JPEG')
-
     key = hashlib.sha256(encoded_jpg).hexdigest()
     width = int(data['size']['width'])
     height = int(data['size']['height'])
@@ -90,8 +89,6 @@ def dict_to_tf_example(data, annotations_dir, images_dir, label_map_dict, includ
                 mask_np = np.asarray(mask)
                 mask_remapped = (mask_np == 255).astype(np.uint8)
                 masks.append(mask_remapped)
-                # print(mask_remapped)
-
     feature_dict = {
         'image/height': dataset_util.int64_feature(height),
         'image/width': dataset_util.int64_feature(width),
@@ -120,9 +117,7 @@ def dict_to_tf_example(data, annotations_dir, images_dir, label_map_dict, includ
             output = io.BytesIO()
             img.save(output, format='PNG')
             encoded_mask_png_list.append(output.getvalue())
-            # print(output.getvalue())
         feature_dict['image/object/mask'] = (dataset_util.bytes_list_feature(encoded_mask_png_list))
-
     example = tf.train.Example(features=tf.train.Features(feature=feature_dict))
     return example
 
