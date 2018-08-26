@@ -1,3 +1,6 @@
+r"""
+python convert_csv_to_sframe.py "${EXPORTED_CSV_FILE}"
+"""
 import turicreate as tc
 from turicreate import SArray
 import pandas as pd
@@ -7,6 +10,7 @@ import sys
 csv_file = sys.argv[1]
 
 csv = pd.read_csv(csv_file)
+
 for i, row in csv.iterrows():
     image_folder = str(os.path.split(row['path'])[0])
     break;
