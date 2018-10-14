@@ -1,5 +1,5 @@
 # Rectlabel-support
-This is the support page for "RectLabel - Labeling images for object detection" on Mac App Store.
+This is the support page for "RectLabel for object detection" on Mac App Store.
 https://itunes.apple.com/app/rectlabel-labeling-images-for-object-detection/id1210181730?mt=12
 
 The document how to use RectLabel.
