@@ -40,6 +40,6 @@ Thank you.
 ![alt text](https://static.rectlabel.com/waysify_app/img/edit_points.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/1-click.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/dialog.jpg?)
-![alt text](https://static.rectlabel.com/waysify_app/img/objects.jpg?)
+![alt text](https://static.rectlabel.com/waysify_app/img/objects.jpg??)
 ![alt text](https://static.rectlabel.com/waysify_app/img/search.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/focus.jpg?)
