@@ -134,6 +134,9 @@ def main(_):
     for idx, image_file in enumerate(image_files):
         print(idx, image_file)
         annotation_path = os.path.join(annotations_dir, os.path.splitext(image_file)[0] + '.xml')
+        if not os.path.exists(annotation_path):
+            print('Could not find %s, ignoring example.', annotation_path)
+            continue
         with tf.gfile.GFile(annotation_path, 'r') as fid:
             xml_str = fid.read()
         xml = etree.fromstring(xml_str)
