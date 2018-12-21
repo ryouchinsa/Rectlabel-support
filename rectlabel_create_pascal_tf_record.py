@@ -84,7 +84,7 @@ def dict_to_tf_example(data, annotations_dir, images_dir, label_map_dict, includ
             poses.append(obj['pose'].encode('utf8'))
 
             if include_masks:
-                mask_path = os.path.join(annotations_dir, os.path.splitext(data['filename'])[0] + '_' + str(idx) + '.png')
+                mask_path = os.path.join(annotations_dir, os.path.splitext(data['filename'])[0] + '_object' + str(idx) + '.png')
                 with tf.gfile.GFile(mask_path, 'rb') as fid:
                     encoded_mask_png = fid.read()
                 encoded_png_io = io.BytesIO(encoded_mask_png)
