@@ -26,6 +26,7 @@ Thank you.
 # Key features
 - Drawing bounding box, polygon, and cubic bezier
 - Export index color mask image and separated mask images
+- Label pixels with superpixel and brush tools
 - 1-click buttons make your labeling work faster
 - Customize the label dialog to combine with attributes
 - Settings for objects, attributes, hotkeys, and labeling fast
@@ -36,8 +37,9 @@ Thank you.
 
 # ScreenShots
 ![alt text](https://static.rectlabel.com/waysify_app/img/draw.jpg?)
-![alt text](https://static.rectlabel.com/waysify_app/img/mask.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/edit_points.jpg?)
+![alt text](https://static.rectlabel.com/waysify_app/img/mask.jpg?)
+![alt text](https://static.rectlabel.com/waysify_app/img/pixels.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/1-click.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/dialog.jpg??)
 ![alt text](https://static.rectlabel.com/waysify_app/img/objects.jpg???)
