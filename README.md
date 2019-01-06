@@ -24,24 +24,26 @@ Want to put your link here? Send an email to support@rectlabel.com
 Thank you.
 
 # Key features
-- Drawing bounding box, polygon, and cubic bezier
-- Export index color mask image and separated mask images
+- Drawing bounding box, polygon, cubic bezier, line and point
+- Label the whole image without drawing boxes
 - Label pixels with superpixel and brush tools
-- 1-click buttons make your labeling work faster
+- Export index color mask image and separated mask images
+- Export to the COCO JSON format and the CSV format
+- Read and write in the PASCAL VOC XML format
 - Customize the label dialog to combine with attributes
+- 1-click buttons make your labeling work faster
 - Settings for objects, attributes, hotkeys, and labeling fast
 - Search images whose labels include keywords
 - Layer order for overlapped boxes
 - Quick zoom to existing boxes
-- Support the PASCAL VOC format
 
 # ScreenShots
 ![alt text](https://static.rectlabel.com/waysify_app/img/draw.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/edit_points.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/mask.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/pixels.jpg?)
-![alt text](https://static.rectlabel.com/waysify_app/img/1-click.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/dialog.jpg??)
+![alt text](https://static.rectlabel.com/waysify_app/img/1-click.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/objects.jpg???)
 ![alt text](https://static.rectlabel.com/waysify_app/img/search.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/focus.jpg?)
