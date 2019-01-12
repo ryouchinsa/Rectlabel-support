@@ -12,17 +12,6 @@ Have questions? Send an email to support@rectlabel.com
 
 Thank you.
 
-# Need data labeling services?
-We introduce some great data labeling services.
-
-- Edgecase AI data labeling https://www.edgecase.ai/
-- Human in the Loop http://humanintheloop.bg
-- Raidon https://raidon.io
-
-Want to put your link here? Send an email to support@rectlabel.com
-
-Thank you.
-
 # Key features
 - Drawing bounding box, polygon, cubic bezier, line and point
 - Label the whole image without drawing boxes
@@ -40,7 +29,7 @@ Thank you.
 # ScreenShots
 ![alt text](https://static.rectlabel.com/waysify_app/img/draw.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/edit_points.jpg?)
-![alt text](https://static.rectlabel.com/waysify_app/img/mask.jpg?)
+![alt text](https://static.rectlabel.com/waysify_app/img/mask.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/pixels.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/dialog.jpg??)
 ![alt text](https://static.rectlabel.com/waysify_app/img/1-click.jpg?)
