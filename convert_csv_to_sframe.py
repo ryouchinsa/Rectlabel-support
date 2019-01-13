@@ -6,10 +6,15 @@ from turicreate import SArray
 import pandas as pd
 import os
 import sys
+import csv
+import json
+
+def JSONParser(data):
+    json_data = json.loads(data)
+    return json_data
 
 csv_file = sys.argv[1]
-
-csv = pd.read_csv(csv_file)
+csv = pd.read_csv(csv_file, quotechar='\'', doublequote=True, converters={'annotations':JSONParser})
 
 for i, row in csv.iterrows():
     image_folder = str(os.path.split(row['path'])[0])
@@ -22,7 +27,7 @@ for j, item in enumerate(data):
     has_annotation = False
     for i, row in csv.iterrows():
         if str(row['path']) == item['path']:
-            annotations.append(eval(row['annotations']))
+            annotations.append(row['annotations'])
             has_annotation = True
             break
     if not has_annotation:
