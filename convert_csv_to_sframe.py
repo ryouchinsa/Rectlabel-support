@@ -20,7 +20,7 @@ for i, row in csv.iterrows():
     image_folder = str(os.path.split(row['path'])[0])
     break;
 
-data = tc.image_analysis.load_images(image_folder, with_path=True)
+data = tc.image_analysis.load_images(image_folder, with_path=True, recursive=False)
 
 annotations = []
 for j, item in enumerate(data):

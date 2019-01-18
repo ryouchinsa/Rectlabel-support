@@ -1,10 +1,9 @@
 r"""
 python object_detection/dataset_tools/rectlabel_create_pascal_tf_record.py \
     --images_dir="${IMAGES_DIR}" \
+    --image_list_path="${IMAGE_LIST_PATH}" \
     --label_map_path="${LABEL_MAP_PATH}" \
-    --output_dir="${OUTPUT_DIR}" \
-    --split_rates="${SPLIT_RATES}" \
-    --split_names="${SPLIT_NAMES}" \
+    --output_path="${OUTPUT_PATH}" \
     --include_masks
 """
 import hashlib
@@ -23,16 +22,14 @@ import tensorflow as tf
 from object_detection.utils import dataset_util
 from object_detection.utils import label_map_util
 
-
 flags = tf.app.flags
-flags.DEFINE_boolean('include_masks', False, 'Add image/object/mask to TFRecord using png images in annotations folder')
 flags.DEFINE_string('images_dir', '', 'Full path to the images directory.')
-flags.DEFINE_string('annotations_dir', 'annotations', '(Relative) path to annotations directory.')
-flags.DEFINE_string('label_map_path', 'data/pascal_label_map.pbtxt', 'Path to label map proto')
-flags.DEFINE_string('output_dir', '', 'Directory to output TFRecord')
-flags.DEFINE_string('split_rates', '60/20/20', 'Split data into train, val, test')
-flags.DEFINE_string('split_names', 'train/val/test', 'Split data into train, val, test')
-flags.DEFINE_boolean('ignore_difficult_instances', False, 'Whether to ignore difficult instances')
+flags.DEFINE_string('image_list_path', 'train.txt', 'Path to image list text file.')
+flags.DEFINE_string('annotations_dir', 'annotations', 'Relative path to annotations directory.')
+flags.DEFINE_string('label_map_path', 'data/pascal_label_map.pbtxt', 'Path to label map proto.')
+flags.DEFINE_string('output_path', '', 'Path to output TFRecord.')
+flags.DEFINE_boolean('include_masks', False, 'Add image/object/mask to TFRecord using png images in annotations folder.')
+flags.DEFINE_boolean('ignore_difficult_instances', False, 'Whether to ignore difficult instances.')
 FLAGS = flags.FLAGS
 
 
@@ -44,9 +41,8 @@ def getClassId(name, label_map_dict):
             break
     return class_id
 
-def dict_to_tf_example(data, annotations_dir, images_dir, label_map_dict, include_masks, ignore_difficult_instances):
-    image_path = os.path.join(images_dir, data['filename'])
-    with tf.gfile.GFile(image_path, 'rb') as fid:
+def dict_to_tf_example(data, image_file, annotations_dir, label_map_dict, include_masks, ignore_difficult_instances):
+    with tf.gfile.GFile(image_file, 'rb') as fid:
         encoded_jpg = fid.read()
     encoded_jpg_io = io.BytesIO(encoded_jpg)
     image = PIL.Image.open(encoded_jpg_io)
@@ -129,58 +125,22 @@ def dict_to_tf_example(data, annotations_dir, images_dir, label_map_dict, includ
 
 def main(_):
     images_dir = FLAGS.images_dir
-    label_map_dict = label_map_util.get_label_map_dict(FLAGS.label_map_path)
-    os.chdir(images_dir)
-    file_types = ('*.jpg', '*.jpeg')
-    image_files = []
-    for file_type in file_types:
-        image_files.extend(glob.glob(file_type))
+    image_files = dataset_util.read_examples_list(FLAGS.image_list_path)
     annotations_dir = os.path.join(images_dir, FLAGS.annotations_dir)
-
-    image_files_with_annotations = []
+    label_map_dict = label_map_util.get_label_map_dict(FLAGS.label_map_path)
+    writer = tf.python_io.TFRecordWriter(FLAGS.output_path)
     for idx, image_file in enumerate(image_files):
-        annotation_path = os.path.join(annotations_dir, os.path.splitext(image_file)[0] + '.xml')
-        if not os.path.exists(annotation_path):
-            continue
-        image_files_with_annotations.append(image_file)
-    image_files = image_files_with_annotations;
+        print(idx, image_file)
+        image_file_split = image_file.split('/')
+        annotation_path = os.path.join(annotations_dir, os.path.splitext(image_file_split[-1])[0] + '.xml')
+        with tf.gfile.GFile(annotation_path, 'r') as fid:
+            xml_str = fid.read()
+        xml = etree.fromstring(xml_str)
+        data = dataset_util.recursive_parse_xml_to_dict(xml)['annotation']
+        tf_example = dict_to_tf_example(data, image_file, annotations_dir, label_map_dict, FLAGS.include_masks, FLAGS.ignore_difficult_instances)
+        writer.write(tf_example.SerializeToString())
+    writer.close()
 
-    split_size_list = FLAGS.split_rates.split('/')
-    image_files_count = 0
-    for idx, split_str in enumerate(split_size_list):
-        split_size_list[idx] = int(int(split_str) * len(image_files) / 100);
-        image_files_count += split_size_list[idx]
-    if image_files_count < len(image_files):
-        split_size_list[0] += len(image_files) - image_files_count
-
-    image_files_ids = list(range(len(image_files)))
-    random.seed(0)
-    random.shuffle(image_files_ids)
-
-    offset = 0
-    image_files_list = []
-    for split_size in split_size_list:
-        image_files_ids_split = image_files_ids[offset:offset + split_size]
-        image_files_split = [image_files[idx] for idx in image_files_ids_split]
-        image_files_list.append(image_files_split)
-        offset += split_size
-
-    split_names_list = FLAGS.split_names.split('/')
-    for split_idx, image_files in enumerate(image_files_list):
-        output_path = FLAGS.output_dir + '/' + split_names_list[split_idx] + '.record'
-        print("Start writing " + output_path)
-        writer = tf.python_io.TFRecordWriter(output_path)
-        for idx, image_file in enumerate(image_files):
-            print(idx, image_file)
-            annotation_path = os.path.join(annotations_dir, os.path.splitext(image_file)[0] + '.xml')
-            with tf.gfile.GFile(annotation_path, 'r') as fid:
-                xml_str = fid.read()
-            xml = etree.fromstring(xml_str)
-            data = dataset_util.recursive_parse_xml_to_dict(xml)['annotation']
-            tf_example = dict_to_tf_example(data, annotations_dir, FLAGS.images_dir, label_map_dict, FLAGS.include_masks, FLAGS.ignore_difficult_instances)
-            writer.write(tf_example.SerializeToString())
-        writer.close()
-
-
+        
 if __name__ == '__main__':
     tf.app.run()
