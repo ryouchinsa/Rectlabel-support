@@ -17,7 +17,7 @@ Thank you.
 - Label the whole image without drawing boxes
 - Label pixels with superpixel and brush tools
 - Export index color mask image and separated mask images
-- Export to the YOLO, COCO JSON, and CSV format
+- Export to the YOLO, KITTI, COCO JSON, and CSV format
 - Read and write in the PASCAL VOC XML format
 - Customize the label dialog to combine with attributes
 - 1-click buttons make your labeling work faster
