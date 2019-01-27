@@ -23,6 +23,7 @@ Thank you.
 - 1-click buttons make your labeling work faster
 - Settings for objects, attributes, hotkeys, and labeling fast
 - Search images whose labels include keywords
+- Convert video to image frames
 - Layer order for overlapped boxes
 - Quick zoom to existing boxes
 
@@ -35,4 +36,5 @@ Thank you.
 ![alt text](https://static.rectlabel.com/waysify_app/img/1-click.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/objects.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/search.jpg?)
+![alt text](https://static.rectlabel.com/waysify_app/img/video_frames.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/focus.jpg?)
