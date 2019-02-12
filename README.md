@@ -19,6 +19,7 @@ Thank you.
 - Export index color mask image and separated mask images
 - Export to the YOLO, KITTI, COCO JSON, and CSV format
 - Read and write in the PASCAL VOC XML format
+- Auto-suggest speeds up selecting the object name
 - Customize the label dialog to combine with attributes
 - 1-click buttons make your labeling work faster
 - Settings for objects, attributes, hotkeys, and labeling fast
@@ -32,6 +33,7 @@ Thank you.
 ![alt text](https://static.rectlabel.com/waysify_app/img/edit_points.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/mask.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/pixels.jpg?)
+![alt text](https://static.rectlabel.com/waysify_app/img/auto_suggest.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/dialog.jpg??)
 ![alt text](https://static.rectlabel.com/waysify_app/img/1-click.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/objects.jpg)
