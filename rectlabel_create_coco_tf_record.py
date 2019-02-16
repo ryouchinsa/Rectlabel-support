@@ -24,21 +24,13 @@ from object_detection.utils import dataset_util
 from object_detection.utils import label_map_util
 
 flags = tf.app.flags
-tf.flags.DEFINE_boolean('dump_masks', False,
-                        'Whether to dump mask images. default: False.')
-tf.flags.DEFINE_boolean('include_masks', False,
-                        'Whether to include instance segmentations masks '
-                        '(PNG encoded) in the result. default: False.')
-tf.flags.DEFINE_string('train_image_dir', '',
-                       'Training image directory.')
-tf.flags.DEFINE_string('val_image_dir', '',
-                       'Validation image directory.')
-tf.flags.DEFINE_string('train_annotations_file', '',
-                       'Training annotations JSON file.')
-tf.flags.DEFINE_string('val_annotations_file', '',
-                       'Validation annotations JSON file.')
-tf.flags.DEFINE_string('output_dir', '/tmp/', 'Output data directory.')
-
+flags.DEFINE_string('train_image_dir', '', 'Full path to training images directory.')
+flags.DEFINE_string('val_image_dir', '', 'Full path to validation images directory.')
+flags.DEFINE_string('train_annotations_file', '', 'Full path to training annotations JSON file.')
+flags.DEFINE_string('val_annotations_file', '', 'Full path to validation annotations JSON file.')
+flags.DEFINE_string('output_dir', '/tmp/', 'Full path to output data directory.')
+flags.DEFINE_boolean('include_masks', False, 'If you train Mask-RCNN, add --include_masks otherwise you can remove it. "segmentation" is expected to be RLE format.')
+flags.DEFINE_boolean('dump_masks', False, 'Whether to dump mask images. default: False.')
 FLAGS = flags.FLAGS
 
 tf.logging.set_verbosity(tf.logging.INFO)

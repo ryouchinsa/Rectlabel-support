@@ -1,6 +1,7 @@
 r"""
 python object_detection/dataset_tools/rectlabel_create_pascal_tf_record.py \
     --images_dir="${IMAGES_DIR}" \
+    --annotations_dir="${ANNOTATIONS_DIR}" \
     --image_list_path="${IMAGE_LIST_PATH}" \
     --label_map_path="${LABEL_MAP_PATH}" \
     --output_path="${OUTPUT_PATH}" \
@@ -23,12 +24,12 @@ from object_detection.utils import dataset_util
 from object_detection.utils import label_map_util
 
 flags = tf.app.flags
-flags.DEFINE_string('images_dir', '', 'Full path to the images directory.')
-flags.DEFINE_string('image_list_path', 'train.txt', 'Path to image list text file.')
-flags.DEFINE_string('annotations_dir', 'annotations', 'Relative path to annotations directory.')
-flags.DEFINE_string('label_map_path', 'data/pascal_label_map.pbtxt', 'Path to label map proto.')
-flags.DEFINE_string('output_path', '', 'Path to output TFRecord.')
-flags.DEFINE_boolean('include_masks', False, 'Add image/object/mask to TFRecord using png images in annotations folder.')
+flags.DEFINE_string('images_dir', '', 'Full path to images directory.')
+flags.DEFINE_string('annotations_dir', 'annotations', 'Relative path to annotations directory from images_dir.')
+flags.DEFINE_string('image_list_path', 'train.txt', 'Full path to image list file which is one of the output files from "Export train, val, and test.txt".')
+flags.DEFINE_string('label_map_path', 'label_map.pbtxt', 'Full path to label map file.')
+flags.DEFINE_string('output_path', '', 'Full path to output TFRecord file.')
+flags.DEFINE_boolean('include_masks', False, 'If you train Mask-RCNN, add --include_masks otherwise you can remove it. Mask images are expected to be png files and in the annotations folder.')
 flags.DEFINE_boolean('ignore_difficult_instances', False, 'Whether to ignore difficult instances.')
 FLAGS = flags.FLAGS
 
