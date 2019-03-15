@@ -16,7 +16,6 @@ from pprint import pprint
 
 from lxml import etree
 import numpy as np
-np.set_printoptions(threshold=np.nan)
 import PIL.Image
 import tensorflow as tf
 
