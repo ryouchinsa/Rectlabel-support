@@ -19,24 +19,23 @@ Thank you.
 - Export index color mask image and separated mask images
 - Export to the YOLO, KITTI, COCO JSON, and CSV format
 - Read and write in the PASCAL VOC XML format
+- Automatically label images using Core ML model
 - Auto-suggest speeds up selecting the object name
 - Customize the label dialog to combine with attributes
 - 1-click buttons make your labeling work faster
 - Settings for objects, attributes, hotkeys, and labeling fast
 - Search images whose labels include keywords
 - Convert video to image frames
-- Layer order for overlapped boxes
-- Quick zoom to existing boxes
 
 # ScreenShots
 ![alt text](https://static.rectlabel.com/waysify_app/img/draw.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/edit_points.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/mask.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/pixels.jpg)
+![alt text](https://static.rectlabel.com/waysify_app/img/coreml.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/auto_suggest.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/dialog.jpg??)
 ![alt text](https://static.rectlabel.com/waysify_app/img/1-click.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/objects.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/search.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/video_frames.jpg)
-![alt text](https://static.rectlabel.com/waysify_app/img/focus.jpg)
