@@ -15,7 +15,7 @@ Thank you.
 # Key features
 - Drawing bounding box, polygon, cubic bezier, line and point
 - Label the whole image without drawing boxes
-- Label pixels with superpixel and brush tools
+- Label pixels with brush and superpixel tools
 - Export index color mask image and separated mask images
 - Export to the YOLO, KITTI, COCO JSON, and CSV format
 - Read and write in the PASCAL VOC XML format
@@ -31,11 +31,10 @@ Thank you.
 ![alt text](https://static.rectlabel.com/waysify_app/img/draw.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/edit_points.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/mask.jpg)
-![alt text](https://static.rectlabel.com/waysify_app/img/pixels.jpg)
+![alt text](https://static.rectlabel.com/waysify_app/img/superpixel.jpg)
+![alt text](https://static.rectlabel.com/waysify_app/img/brush.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/coreml.jpg)
-![alt text](https://static.rectlabel.com/waysify_app/img/auto_suggest.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/dialog.jpg??)
 ![alt text](https://static.rectlabel.com/waysify_app/img/1-click.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/objects.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/search.jpg)
-![alt text](https://static.rectlabel.com/waysify_app/img/video_frames.jpg)
