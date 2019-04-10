@@ -1,12 +1,3 @@
-r"""
-python object_detection/dataset_tools/rectlabel_create_pascal_tf_record.py \
-    --images_dir="${IMAGES_DIR}" \
-    --annotations_dir="${ANNOTATIONS_DIR}" \
-    --image_list_path="${IMAGE_LIST_PATH}" \
-    --label_map_path="${LABEL_MAP_PATH}" \
-    --output_path="${OUTPUT_PATH}" \
-    --include_masks
-"""
 import hashlib
 import io
 import os

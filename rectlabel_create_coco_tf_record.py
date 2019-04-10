@@ -1,12 +1,3 @@
-r"""
-python object_detection/dataset_tools/rectlabel_create_coco_tf_record.py \
-    --train_image_dir="${TRAIN_IMAGE_DIR}" \
-    --val_image_dir="${VAL_IMAGE_DIR}" \
-    --train_annotations_file="${TRAIN_ANNOTATIONS_FILE}" \
-    --val_annotations_file="${VAL_ANNOTATIONS_FILE}" \
-    --output_dir="${OUTPUT_DIR}" \
-    --include_masks
-"""
 import hashlib
 import io
 import json
