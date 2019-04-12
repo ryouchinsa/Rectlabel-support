@@ -14,18 +14,19 @@ import matplotlib.pyplot as plt
 import pylab
 pylab.rcParams['figure.figsize'] = (8.0, 10.0)
 
-annFile='/Users/ryo/Desktop/annotations.json'
+annFile='/Users/ryo/Desktop/test_annotations/test_data_coco/annotations.json'
 
 coco=COCO(annFile)
 
-imgIds = coco.getImgIds(imgIds = [1])
+imgIds = coco.getImgIds(imgIds = [1, 2])
 img = coco.loadImgs(imgIds[0])[0]
 imgFolder = '/Users/ryo/Desktop/test_annotations/test_data_coco/'
 I = io.imread(imgFolder + img['file_name'])
 plt.axis('off')
 plt.imshow(I);
 
-annIds = coco.getAnnIds(imgIds=img['id'], catIds=[1], iscrowd=None)
+catIds = list(range(1, 100))
+annIds = coco.getAnnIds(imgIds=img['id'], catIds=catIds, iscrowd=None)
 anns = coco.loadAnns(annIds)
 coco.showAnns(anns)
 plt.show()
