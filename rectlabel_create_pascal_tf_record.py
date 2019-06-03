@@ -28,7 +28,7 @@ def getClassId(name, label_map_dict):
     class_id = -1
     for item_name, item_id in label_map_dict.items():
         item_name_underbar = item_name.replace('-', '_')
-        if item_name_underbar in name:
+        if item_name in name or item_name_underbar in name:
             class_id = item_id
             break
     return class_id
