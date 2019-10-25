@@ -6,22 +6,33 @@ import sys
 save_as_jpg = True
 
 dcm_file = sys.argv[1]
-ds = pydicom.dcmread(dcm_file)
-print(ds)
+output_folder = sys.argv[2]
 
-dcm_filename = os.path.splitext(dcm_file)[0]
-for idx, pixel in enumerate(ds.pixel_array):
+def from2dArray(dcm_filename, idx, pixel):
     shape = pixel.shape
-    image_2d = pixel.astype(float)
-    image_2d = (np.maximum(image_2d, 0) / image_2d.max()) * 255.0
-    image_2d = np.uint8(image_2d)
+    image_array = pixel.astype(float)
+    image_array = (np.maximum(image_array, 0) / image_array.max()) * 255.0
+    image_array = np.uint8(image_array)
     if save_as_jpg:
-        path_jpg = dcm_filename + '_' + str(idx) + '.jpg'
-        im = PIL.Image.fromarray(image_2d)
+        path_jpg = output_folder + '/' + dcm_filename + '_' + str(idx) + '.jpg'
+        im = PIL.Image.fromarray(image_array)
         im.save(path_jpg)
     else:
-        path_png = dcm_filename + '_' + str(idx) + '.png'
+        path_png = output_folder + '/' + dcm_filename + '_' + str(idx) + '.png'
         with open(path_png, 'wb') as file:
             w = png.Writer(shape[1], shape[0], greyscale=True)
-            w.write(file, image_2d)
+            w.write(file, image_array)
+
+ds = pydicom.dcmread(dcm_file)
+dcm_filename = os.path.splitext(os.path.basename(dcm_file))[0]
+print(ds)
+print(ds.pixel_array.shape)
+
+if ds.pixel_array.ndim == 2:
+    idx = 0
+    from2dArray(dcm_filename, idx, ds.pixel_array)
+else:
+    for idx, pixel in enumerate(ds.pixel_array):
+        from2dArray(dcm_filename, idx, pixel)
+
 
