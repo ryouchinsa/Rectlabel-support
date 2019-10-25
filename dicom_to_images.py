@@ -8,7 +8,7 @@ save_as_jpg = True
 dcm_file = sys.argv[1]
 output_folder = sys.argv[2]
 
-def from2dArray(dcm_filename, frame_idx, pixel):
+def pixelToImage(dcm_filename, frame_idx, pixel):
     shape = pixel.shape
     image_array = pixel.astype(float)
     image_array = (np.maximum(image_array, 0) / image_array.max()) * 255.0
@@ -34,12 +34,12 @@ if 'NumberOfFrames' in ds:
 
 frame_idx = 0
 if not 'NumberOfFrames' in ds:
-    from2dArray(dcm_filename, frame_idx, ds.pixel_array)
+    pixelToImage(dcm_filename, frame_idx, ds.pixel_array)
 elif ds.NumberOfFrames == 1:
-    from2dArray(dcm_filename, frame_idx, ds.pixel_array)
+    pixelToImage(dcm_filename, frame_idx, ds.pixel_array)
 else:
     for frame_idx, pixel in enumerate(ds.pixel_array):
-        from2dArray(dcm_filename, frame_idx, pixel)
+        pixelToImage(dcm_filename, frame_idx, pixel)
     
 
 
