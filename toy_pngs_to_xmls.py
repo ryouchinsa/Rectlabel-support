@@ -1,3 +1,6 @@
+# You can obtain pixels_template.xml.
+# https://github.com/ryouchinsa/Rectlabel-support/blob/master/pixels_template.xml
+
 import os
 from PIL import Image
 import numpy as np
