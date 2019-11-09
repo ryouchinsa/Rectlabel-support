@@ -1,0 +1,20 @@
+<annotation>
+    <folder>test_data_donut</folder>
+    <filename>di_an_h-NsG0zoy6eMM-unsplash.jpg</filename>
+    <size>
+        <width>5758</width>
+        <height>4000</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>0</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <pixels>
+            <id>0</id>
+        </pixels>
+    </object>
+</annotation>
