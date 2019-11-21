@@ -14,15 +14,15 @@ from object_detection.utils import dataset_util
 from object_detection.utils import label_map_util
 
 flags = tf.app.flags
-flags.DEFINE_string('images_dir', '', 'Full path to images directory.')
-flags.DEFINE_string('annotations_dir', 'annotations', 'Relative path to annotations directory from images_dir.')
-flags.DEFINE_string('image_list_path', 'train.txt', 'Full path to image list file which is one of the output files from "Export train, val, and test.txt".')
+flags.DEFINE_string('images_dir', '', 'Full path to images folder.')
+flags.DEFINE_string('train_txt_path', '', 'Full path to train.txt.')
+flags.DEFINE_string('val_txt_path', '', 'Full path to val.txt.')
+flags.DEFINE_string('annotations_dir', '', 'Full path to annotations directory.')
+flags.DEFINE_string('masks_dir', '', 'Full path to exported masks folder for Mask-RCNN.')
 flags.DEFINE_string('label_map_path', 'label_map.pbtxt', 'Full path to label map file.')
-flags.DEFINE_string('output_path', '', 'Full path to output TFRecord file.')
-flags.DEFINE_boolean('include_masks', False, 'If you train Mask-RCNN, add --include_masks otherwise you can remove it. Mask images are expected to be png files and in the annotations folder.')
+flags.DEFINE_string('output_dir', '', 'Full path to output directory.')
 flags.DEFINE_boolean('ignore_difficult_instances', False, 'Whether to ignore difficult instances.')
 FLAGS = flags.FLAGS
-
 
 def getClassId(name, label_map_dict):
     class_id = -1
@@ -33,8 +33,8 @@ def getClassId(name, label_map_dict):
             break
     return class_id
 
-def dict_to_tf_example(data, image_file, annotations_dir, label_map_dict, include_masks, ignore_difficult_instances):
-    with tf.gfile.GFile(image_file, 'rb') as fid:
+def dict_to_tf_example(data, image_path, annotations_dir, masks_dir, label_map_dict, ignore_difficult_instances):
+    with tf.gfile.GFile(image_path, 'rb') as fid:
         encoded_jpg = fid.read()
     encoded_jpg_io = io.BytesIO(encoded_jpg)
     image = PIL.Image.open(encoded_jpg_io)
@@ -60,6 +60,7 @@ def dict_to_tf_example(data, image_file, annotations_dir, label_map_dict, includ
                 continue
             class_id = getClassId(obj['name'], label_map_dict)
             if class_id < 0:
+                print(obj['name'] + ' is not in the label map.')
                 continue
             difficult_obj.append(int(difficult))
             xmin.append(float(obj['bndbox']['xmin']) / width)
@@ -70,9 +71,8 @@ def dict_to_tf_example(data, image_file, annotations_dir, label_map_dict, includ
             classes.append(class_id)
             truncated.append(int(obj['truncated']))
             poses.append(obj['pose'].encode('utf8'))
-
-            if include_masks:
-                mask_path = os.path.join(annotations_dir, os.path.splitext(data['filename'])[0] + '_object' + str(idx) + '.png')
+            if masks_dir:
+                mask_path = os.path.join(masks_dir, os.path.splitext(data['filename'])[0] + '_object' + str(idx) + '.png')
                 with tf.gfile.GFile(mask_path, 'rb') as fid:
                     encoded_mask_png = fid.read()
                 encoded_png_io = io.BytesIO(encoded_mask_png)
@@ -102,8 +102,7 @@ def dict_to_tf_example(data, image_file, annotations_dir, label_map_dict, includ
         'image/object/truncated': dataset_util.int64_list_feature(truncated),
         'image/object/view': dataset_util.bytes_list_feature(poses),
     }
-
-    if include_masks:
+    if masks_dir:
         encoded_mask_png_list = []
         for mask in masks:
             img = PIL.Image.fromarray(mask)
@@ -114,25 +113,31 @@ def dict_to_tf_example(data, image_file, annotations_dir, label_map_dict, includ
     example = tf.train.Example(features=tf.train.Features(feature=feature_dict))
     return example
 
-
-def main(_):
-    images_dir = FLAGS.images_dir
-    image_files = dataset_util.read_examples_list(FLAGS.image_list_path)
-    annotations_dir = os.path.join(images_dir, FLAGS.annotations_dir)
+def process_images(image_files, output_path):
+    print('# Started ' + output_path)
+    annotations_dir = FLAGS.annotations_dir
     label_map_dict = label_map_util.get_label_map_dict(FLAGS.label_map_path)
-    writer = tf.python_io.TFRecordWriter(FLAGS.output_path)
+    writer = tf.python_io.TFRecordWriter(output_path)
     for idx, image_file in enumerate(image_files):
-        print(idx, image_file)
-        image_file_split = image_file.split('/')
-        annotation_path = os.path.join(annotations_dir, os.path.splitext(image_file_split[-1])[0] + '.xml')
+        image_path = os.path.join(FLAGS.images_dir, image_file)
+        print(idx, image_path)
+        annotation_path = os.path.join(annotations_dir, os.path.splitext(image_file)[0] + '.xml')
         with tf.gfile.GFile(annotation_path, 'r') as fid:
             xml_str = fid.read()
         xml = etree.fromstring(xml_str)
         data = dataset_util.recursive_parse_xml_to_dict(xml)['annotation']
-        tf_example = dict_to_tf_example(data, image_file, annotations_dir, label_map_dict, FLAGS.include_masks, FLAGS.ignore_difficult_instances)
+        tf_example = dict_to_tf_example(data, image_path, annotations_dir, FLAGS.masks_dir, label_map_dict, FLAGS.ignore_difficult_instances)
         writer.write(tf_example.SerializeToString())
     writer.close()
 
-        
+def main(_):
+    train_images = dataset_util.read_examples_list(FLAGS.train_txt_path)
+    val_images = dataset_util.read_examples_list(FLAGS.val_txt_path)
+    train_output_path = os.path.join(FLAGS.output_dir, 'train.record')
+    val_output_path = os.path.join(FLAGS.output_dir, 'val.record')
+    process_images(train_images, train_output_path)
+    process_images(val_images, val_output_path)
+    print('# Finished.')
+
 if __name__ == '__main__':
     tf.app.run()

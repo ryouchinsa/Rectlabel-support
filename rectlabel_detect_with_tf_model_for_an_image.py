@@ -13,7 +13,7 @@ from object_detection.utils import label_map_util
 from object_detection.utils import visualization_utils as vis_util
 
 flags = tf.app.flags
-flags.DEFINE_string('images_dir', '', 'Full path to images folder.')
+flags.DEFINE_string('image_path', '', 'Full path to an image path.')
 flags.DEFINE_string('test_txt_path', '', 'Full path to test.txt.')
 flags.DEFINE_string('label_map_path', '', 'Full path to label map file.')
 flags.DEFINE_string('model_path', '', 'Full path to frozen_inference_graph.pb.')
@@ -87,10 +87,9 @@ def detect_an_image(image_path, save_path):
     plt.imshow(image_np)
     plt.savefig(save_path)
 
-for image_file in test_images:
-    image_path = os.path.join(FLAGS.images_dir, image_file)
-    save_path = os.path.join(FLAGS.result_dir, image_file)
-    print('# processing ... ' + image_path)
-    detect_an_image(image_path, save_path)
+image_path = FLAGS.image_path
+save_path = os.path.join(FLAGS.result_dir, os.path.basename(image_path))
+print('# processing ... ' + image_path)
+detect_an_image(image_path, save_path)
 
 print('# Finished.')
