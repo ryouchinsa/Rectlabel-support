@@ -14,7 +14,6 @@ from object_detection.utils import visualization_utils as vis_util
 
 flags = tf.app.flags
 flags.DEFINE_string('image_path', '', 'Full path to an image path.')
-flags.DEFINE_string('test_txt_path', '', 'Full path to test.txt.')
 flags.DEFINE_string('label_map_path', '', 'Full path to label map file.')
 flags.DEFINE_string('model_path', '', 'Full path to frozen_inference_graph.pb.')
 flags.DEFINE_string('result_dir', '', 'Full path to result directory.')
@@ -24,7 +23,6 @@ def makedir(path):
     if not os.path.isdir(path):
         os.mkdir(path)
 makedir(FLAGS.result_dir)
-test_images = dataset_util.read_examples_list(FLAGS.test_txt_path)
 category_index = label_map_util.create_category_index_from_labelmap(FLAGS.label_map_path, use_display_name=True)
 detection_graph = tf.Graph()
 with detection_graph.as_default():
