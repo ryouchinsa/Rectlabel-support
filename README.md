@@ -1,6 +1,6 @@
 # Rectlabel-support
 This is the support page for "RectLabel for object detection" on Mac App Store.
-https://itunes.apple.com/app/id1210181730?mt=12
+https://itunes.apple.com/app/id1210181730
 
 How to use RectLabel.
 https://rectlabel.com/help
