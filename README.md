@@ -16,14 +16,15 @@ Thank you.
 - Drawing bounding box, polygon, cubic bezier, line and point
 - Label the whole image without drawing boxes
 - Label pixels with brush and superpixel tools
-- Export index color mask image and separated mask images
-- Export to the YOLO, KITTI, COCO JSON, and CSV format
-- Read and write in the PASCAL VOC XML format
 - Automatically label images using Core ML model
 - Auto-suggest speeds up selecting the object name
-- Customize the label dialog to combine with attributes
 - 1-click buttons make your labeling work faster
+- Customize the label dialog to combine with attributes
 - Settings for objects, attributes, hotkeys, and labeling fast
+- Read and write in the PASCAL VOC XML format
+- Export index color mask image and separated mask images
+- Export to the YOLO, COCO JSON, and CSV format
+- Export objects and attributes stats
 - Search images whose labels include keywords
 - Convert video to image frames
 
