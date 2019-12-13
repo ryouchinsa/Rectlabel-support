@@ -2,6 +2,9 @@
 This is the support page for "RectLabel for object detection" on Mac App Store.
 https://itunes.apple.com/app/id1210181730
 
+"RectLabel - Volume License" is a paid up-front version of RectLabel and fully feature equivalent with "RectLabel for object detection". Choose this version if you want to purchase RectLabel through Apple Business Manager and Apple School Manager. If you want to test RectLabel please take advantage of the 1 month free trial in the standard "RectLabel for object detection" version.
+https://itunes.apple.com/app/id1490990105
+
 How to use RectLabel.
 https://rectlabel.com/help
 
