@@ -16,19 +16,18 @@ Have questions? Send an email to support@rectlabel.com
 Thank you.
 
 # Key features
-- Drawing bounding box, polygon, cubic bezier, line and point
+- Drawing bounding box, polygon, cubic bezier, line, and point
 - Label the whole image without drawing boxes
 - Label pixels with brush and superpixel tools
 - Automatically label images using Core ML model
-- Auto-suggest speeds up selecting the object name
 - 1-click buttons make your labeling work faster
 - Customize the label dialog to combine with attributes
 - Settings for objects, attributes, hotkeys, and labeling fast
 - Read and write in the PASCAL VOC XML format
-- Export index color mask image and separated mask images
 - Export to the YOLO, COCO JSON, and CSV format
+- Export index color mask image and separated mask images
 - Export objects and attributes stats
-- Search images whose labels include keywords
+- Search images by label text
 - Convert video to image frames
 
 # ScreenShots
