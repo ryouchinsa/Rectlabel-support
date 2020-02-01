@@ -2,7 +2,7 @@
 This is the support page for "RectLabel for object detection" on Mac App Store.
 https://itunes.apple.com/app/id1210181730
 
-"RectLabel - Volume License" is a paid up-front version of RectLabel and fully feature equivalent with "RectLabel for object detection". Choose this version if you want to purchase RectLabel through Apple Business Manager and Apple School Manager.
+"RectLabel - One-time payment" is a paid up-front version.
 https://itunes.apple.com/app/id1490990105
 
 How to use RectLabel.
@@ -16,7 +16,7 @@ Have questions? Send an email to support@rectlabel.com
 Thank you.
 
 # Key features
-- Drawing bounding box, polygon, cubic bezier, line, and point
+- Drawing bounding box, polygon, line, and point
 - Label the whole image without drawing boxes
 - Label pixels with brush and superpixel tools
 - Automatically label images using Core ML model
@@ -26,18 +26,17 @@ Thank you.
 - Read and write in the PASCAL VOC XML format
 - Export to the YOLO, COCO JSON, and CSV format
 - Export index color mask image and separated mask images
-- Export objects and attributes stats
-- Search images by label text
 - Convert video to image frames
+- Label images on AWS S3
 
 # ScreenShots
-![alt text](https://static.rectlabel.com/waysify_app/img/draw.jpg?)
-![alt text](https://static.rectlabel.com/waysify_app/img/edit_points.jpg?)
+![alt text](https://static.rectlabel.com/waysify_app/img/draw.jpg)
+![alt text](https://static.rectlabel.com/waysify_app/img/edit_points.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/mask.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/superpixel.jpg)
-![alt text](https://static.rectlabel.com/waysify_app/img/brush.jpg?)
+![alt text](https://static.rectlabel.com/waysify_app/img/brush.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/coreml.jpg)
-![alt text](https://static.rectlabel.com/waysify_app/img/dialog.jpg??)
-![alt text](https://static.rectlabel.com/waysify_app/img/1-click.jpg?)
+![alt text](https://static.rectlabel.com/waysify_app/img/1-click.jpg)
+![alt text](https://static.rectlabel.com/waysify_app/img/dialog.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/objects.jpg)
-![alt text](https://static.rectlabel.com/waysify_app/img/search.jpg)
+![alt text](https://static.rectlabel.com/waysify_app/img/aws_s3.jpg)
