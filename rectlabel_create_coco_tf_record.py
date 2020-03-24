@@ -19,7 +19,7 @@ flags.DEFINE_string('train_txt_path', '', 'Full path to train.txt.')
 flags.DEFINE_string('val_txt_path', '', 'Full path to val.txt.')
 flags.DEFINE_string('annotations_file', '', 'Full path to annotations JSON file.')
 flags.DEFINE_string('output_dir', '', 'Full path to output directory.')
-flags.DEFINE_boolean('include_masks', False, 'If you train Mask-RCNN, add --include_masks.')
+flags.DEFINE_boolean('include_masks', False, 'To train Mask-RCNN, add --include_masks.')
 FLAGS = flags.FLAGS
 
 DUMP_MASK_IMAGES = False
@@ -89,34 +89,20 @@ def create_tf_example(image_path,
                 save_path = FLAGS.output_dir + '/' + filename.split('.')[0] + '_mask_' + str(idx)+ '.png'
                 pil_image.save(save_path)
     feature_dict = {
-        'image/height':
-            dataset_util.int64_feature(image_height),
-        'image/width':
-            dataset_util.int64_feature(image_width),
-        'image/filename':
-            dataset_util.bytes_feature(filename.encode('utf8')),
-        'image/source_id':
-            dataset_util.bytes_feature(str(image_id).encode('utf8')),
-        'image/key/sha256':
-            dataset_util.bytes_feature(key.encode('utf8')),
-        'image/encoded':
-            dataset_util.bytes_feature(encoded_jpg),
-        'image/format':
-            dataset_util.bytes_feature('jpeg'.encode('utf8')),
-        'image/object/bbox/xmin':
-            dataset_util.float_list_feature(xmin),
-        'image/object/bbox/xmax':
-            dataset_util.float_list_feature(xmax),
-        'image/object/bbox/ymin':
-            dataset_util.float_list_feature(ymin),
-        'image/object/bbox/ymax':
-            dataset_util.float_list_feature(ymax),
-        'image/object/class/label':
-            dataset_util.int64_list_feature(category_ids),
-        'image/object/is_crowd':
-            dataset_util.int64_list_feature(is_crowd),
-        'image/object/area':
-            dataset_util.float_list_feature(area),
+        'image/height': dataset_util.int64_feature(image_height),
+        'image/width': dataset_util.int64_feature(image_width),
+        'image/filename': dataset_util.bytes_feature(filename.encode('utf8')),
+        'image/source_id': dataset_util.bytes_feature(str(image_id).encode('utf8')),
+        'image/key/sha256': dataset_util.bytes_feature(key.encode('utf8')),
+        'image/encoded': dataset_util.bytes_feature(encoded_jpg),
+        'image/format': dataset_util.bytes_feature('jpeg'.encode('utf8')),
+        'image/object/bbox/xmin': dataset_util.float_list_feature(xmin),
+        'image/object/bbox/xmax': dataset_util.float_list_feature(xmax),
+        'image/object/bbox/ymin': dataset_util.float_list_feature(ymin),
+        'image/object/bbox/ymax': dataset_util.float_list_feature(ymax),
+        'image/object/class/label': dataset_util.int64_list_feature(category_ids),
+        'image/object/is_crowd': dataset_util.int64_list_feature(is_crowd),
+        'image/object/area': dataset_util.float_list_feature(area),
     }
     if include_masks:
         feature_dict['image/object/mask'] = (dataset_util.bytes_list_feature(encoded_mask_png))

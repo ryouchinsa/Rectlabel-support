@@ -18,22 +18,23 @@ flags.DEFINE_string('images_dir', '', 'Full path to images folder.')
 flags.DEFINE_string('train_txt_path', '', 'Full path to train.txt.')
 flags.DEFINE_string('val_txt_path', '', 'Full path to val.txt.')
 flags.DEFINE_string('annotations_dir', '', 'Full path to annotations directory.')
-flags.DEFINE_string('masks_dir', '', 'Full path to exported masks folder for Mask-RCNN.')
+flags.DEFINE_string('masks_dir', '', 'Full path to exported mask images folder.')
 flags.DEFINE_string('label_map_path', 'label_map.pbtxt', 'Full path to label map file.')
 flags.DEFINE_string('output_dir', '', 'Full path to output directory.')
-flags.DEFINE_boolean('ignore_difficult_instances', False, 'Whether to ignore difficult instances.')
 FLAGS = flags.FLAGS
 
 def getClassId(name, label_map_dict):
-    class_id = -1
-    for item_name, item_id in label_map_dict.items():
-        item_name_underbar = item_name.replace('-', '_')
-        if item_name in name or item_name_underbar in name:
-            class_id = item_id
-            break
-    return class_id
+    if name in label_map_dict:
+        return label_map_dict[name]
+    name_split = name.split('-')
+    name = name_split[0]
+    for object_name, object_id in label_map_dict.items():
+        object_name_escape = object_name.replace('-', '_')
+        if object_name_escape == name:
+            return object_id
+    return -1
 
-def dict_to_tf_example(data, image_path, annotations_dir, masks_dir, label_map_dict, ignore_difficult_instances):
+def dict_to_tf_example(data, image_path, annotations_dir, masks_dir, label_map_dict):
     with tf.gfile.GFile(image_path, 'rb') as fid:
         encoded_jpg = fid.read()
     encoded_jpg_io = io.BytesIO(encoded_jpg)
@@ -49,28 +50,22 @@ def dict_to_tf_example(data, image_path, annotations_dir, masks_dir, label_map_d
     ymax = []
     classes = []
     classes_text = []
-    truncated = []
-    poses = []
-    difficult_obj = []
     masks = []
     if 'object' in data:
         for idx, obj in enumerate(data['object']):
-            difficult = bool(int(obj['difficult']))
-            if ignore_difficult_instances and difficult:
-                continue
-            class_id = getClassId(obj['name'], label_map_dict)
+            name = obj['name']
+            if name is None:
+                name = ''
+            class_id = getClassId(name, label_map_dict)
             if class_id < 0:
-                print(obj['name'] + ' is not in the label map.')
+                print(name + ' is not in the label map.')
                 continue
-            difficult_obj.append(int(difficult))
             xmin.append(float(obj['bndbox']['xmin']) / width)
             ymin.append(float(obj['bndbox']['ymin']) / height)
             xmax.append(float(obj['bndbox']['xmax']) / width)
             ymax.append(float(obj['bndbox']['ymax']) / height)
-            classes_text.append(obj['name'].encode('utf8'))
+            classes_text.append(name.encode('utf8'))
             classes.append(class_id)
-            truncated.append(int(obj['truncated']))
-            poses.append(obj['pose'].encode('utf8'))
             if masks_dir:
                 mask_path = os.path.join(masks_dir, os.path.splitext(data['filename'])[0] + '_object' + str(idx) + '.png')
                 with tf.gfile.GFile(mask_path, 'rb') as fid:
@@ -85,10 +80,8 @@ def dict_to_tf_example(data, image_path, annotations_dir, masks_dir, label_map_d
     feature_dict = {
         'image/height': dataset_util.int64_feature(height),
         'image/width': dataset_util.int64_feature(width),
-        'image/filename': dataset_util.bytes_feature(
-            data['filename'].encode('utf8')),
-        'image/source_id': dataset_util.bytes_feature(
-            data['filename'].encode('utf8')),
+        'image/filename': dataset_util.bytes_feature(data['filename'].encode('utf8')),
+        'image/source_id': dataset_util.bytes_feature(data['filename'].encode('utf8')),
         'image/key/sha256': dataset_util.bytes_feature(key.encode('utf8')),
         'image/encoded': dataset_util.bytes_feature(encoded_jpg),
         'image/format': dataset_util.bytes_feature('jpeg'.encode('utf8')),
@@ -98,9 +91,6 @@ def dict_to_tf_example(data, image_path, annotations_dir, masks_dir, label_map_d
         'image/object/bbox/ymax': dataset_util.float_list_feature(ymax),
         'image/object/class/text': dataset_util.bytes_list_feature(classes_text),
         'image/object/class/label': dataset_util.int64_list_feature(classes),
-        'image/object/difficult': dataset_util.int64_list_feature(difficult_obj),
-        'image/object/truncated': dataset_util.int64_list_feature(truncated),
-        'image/object/view': dataset_util.bytes_list_feature(poses),
     }
     if masks_dir:
         encoded_mask_png_list = []
@@ -126,7 +116,7 @@ def process_images(image_files, output_path):
             xml_str = fid.read()
         xml = etree.fromstring(xml_str)
         data = dataset_util.recursive_parse_xml_to_dict(xml)['annotation']
-        tf_example = dict_to_tf_example(data, image_path, annotations_dir, FLAGS.masks_dir, label_map_dict, FLAGS.ignore_difficult_instances)
+        tf_example = dict_to_tf_example(data, image_path, annotations_dir, FLAGS.masks_dir, label_map_dict)
         writer.write(tf_example.SerializeToString())
     writer.close()
 
