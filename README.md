@@ -27,7 +27,6 @@ Thank you.
 - Export to the YOLO, COCO JSON, and CSV format
 - Export index color mask image and separated mask images
 - Convert video to image frames
-- Label images on AWS S3
 
 # ScreenShots
 ![alt text](https://static.rectlabel.com/waysify_app/img/draw.jpg?)
@@ -39,4 +38,3 @@ Thank you.
 ![alt text](https://static.rectlabel.com/waysify_app/img/1-click.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/dialog.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/objects.jpg)
-![alt text](https://static.rectlabel.com/waysify_app/img/aws_s3.jpg)
