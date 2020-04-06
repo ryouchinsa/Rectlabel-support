@@ -29,7 +29,7 @@ COCO_WEIGHTS_PATH = os.path.join(ROOT_DIR, "mask_rcnn_coco.h5")
 # through the command line argument --logs
 DEFAULT_LOGS_DIR = os.path.join(ROOT_DIR, "logs")
 
-# Dump segmentatino mask images if you want to check
+# Dump mask images for debug
 DUMP_MASK_IMAGES = False
 
 ############################################################
@@ -42,17 +42,20 @@ class CocoConfig(Config):
     to the COCO dataset.
     """
     # Give the configuration a recognizable name
-    NAME = "coco_rectlabel"
+    NAME = "coco"
 
     # We use a GPU with 12GB memory, which can fit two images.
     # Adjust down if you use a smaller GPU.
     IMAGES_PER_GPU = 2
 
     # Number of classes (including background)
-    NUM_CLASSES = 1 + 3  # Background + 3 classes
+    NUM_CLASSES = 1 + 1  # Background + 1 class
 
     # Number of training steps per epoch
     STEPS_PER_EPOCH = 100
+
+    # Skip detections with < 90% confidence
+    DETECTION_MIN_CONFIDENCE = 0.5
 
 ############################################################
 #  Dataset
@@ -68,19 +71,13 @@ class CocoDataset(utils.Dataset):
         image_dir = "{}/{}".format(dataset_dir, subset)
         coco = COCO("{}/{}".format(image_dir, annotations_file))
         
-        # Load all classes or a subset?
+        # Load all classes
         class_ids = sorted(coco.getCatIds())
-
-        # All images or a subset?
-        if class_ids:
-            image_ids = []
-            for id in class_ids:
-                image_ids.extend(list(coco.getImgIds(catIds=[id])))
-            # Remove duplicates
-            image_ids = list(set(image_ids))
-        else:
-            # All images
-            image_ids = list(coco.imgs.keys())
+        image_ids = []
+        for id in class_ids:
+            image_ids.extend(list(coco.getImgIds(catIds=[id])))
+        # Remove duplicates
+        image_ids = list(set(image_ids))
 
         # Add classes
         for i in class_ids:
@@ -162,15 +159,70 @@ class CocoDataset(utils.Dataset):
             m = maskUtils.decode(segm)     
             mask_shape = m.shape
             m = np.ravel(m, order='F')
-            m = m.reshape(mask_shape, order='C')    
-                     
+            m = m.reshape(mask_shape, order='C')           
         if DUMP_MASK_IMAGES:
             m[m > 0] = 255
             pil_image = PIL.Image.fromarray(m)
             save_path = image_info["path"].split('.')[0] + "_"  + str(idx)+ ".png"
             pil_image.save(save_path)
-
         return m
+
+def train(model):
+    """Train the model."""
+    # Training dataset.
+    dataset_train = CocoDataset()
+    dataset_train.load_coco(args.dataset, args.annotations, "train")
+    dataset_train.prepare()
+
+    # Validation dataset
+    dataset_val = CocoDataset()
+    dataset_val.load_coco(args.dataset, args.annotations, "val")
+    dataset_val.prepare()
+
+    # *** This training schedule is an example. Update to your needs ***
+    # Since we're using a very small dataset, and starting from
+    # COCO trained weights, we don't need to train too long. Also,
+    # no need to train all layers, just the heads should do it.
+    print("Training network heads")
+    model.train(dataset_train, dataset_val,
+                learning_rate=config.LEARNING_RATE,
+                epochs=30,
+                layers='heads')
+
+def color_splash(image, mask):
+    """Apply color splash effect.
+    image: RGB image [height, width, 3]
+    mask: instance segmentation mask [height, width, instance count]
+
+    Returns result image.
+    """
+    # Make a grayscale copy of the image. The grayscale copy still
+    # has 3 RGB channels, though.
+    gray = skimage.color.gray2rgb(skimage.color.rgb2gray(image)) * 255
+    # Copy color pixels from the original color image where mask is set
+    if mask.shape[-1] > 0:
+        # We're treating all instances as one, so collapse the mask into one layer
+        mask = (np.sum(mask, -1, keepdims=True) >= 1)
+        splash = np.where(mask, image, gray).astype(np.uint8)
+    else:
+        splash = gray.astype(np.uint8)
+    return splash
+    
+def detect_and_color_splash(model, image_path):
+    assert image_path
+
+    # Run model detection and generate the color splash effect
+    print("Running on {}".format(args.image))
+    # Read image
+    image = skimage.io.imread(args.image)
+    # Detect objects
+    r = model.detect([image], verbose=1)[0]
+    # Color splash
+    splash = color_splash(image, r['masks'])
+    # Save output
+    file_name = "splash_{:%Y%m%dT%H%M%S}.png".format(datetime.datetime.now())
+    skimage.io.imsave(file_name, splash)
+    print("Saved to ", file_name)
 
 ############################################################
 #  Training
@@ -181,13 +233,13 @@ if __name__ == '__main__':
 
     # Parse command line arguments
     parser = argparse.ArgumentParser(
-        description='Train Mask R-CNN on MS COCO.')
+        description='Train Mask R-CNN.')
     parser.add_argument("command",
                         metavar="<command>",
-                        help="'train' or 'evaluate' on MS COCO")
+                        help="'train' or 'inference'")
     parser.add_argument('--dataset', required=True,
-                        metavar="/path/to/coco/",
-                        help='Directory of the MS-COCO dataset')
+                        metavar="/path/to/dataset/",
+                        help='Directory of the dataset')
     parser.add_argument('--annotations', required=True,
                         metavar="annotations.json",
                         help='The COCO JSON file')
@@ -198,12 +250,16 @@ if __name__ == '__main__':
                         default=DEFAULT_LOGS_DIR,
                         metavar="/path/to/logs/",
                         help='Logs and checkpoints directory (default=logs/)')
+    parser.add_argument('--image', required=False,
+                        metavar="path or URL to image",
+                        help='Image to apply the inference')
     args = parser.parse_args()
     print("Command: ", args.command)
     print("Weights: ", args.weights)
     print("Dataset: ", args.dataset)
     print("Annotations: ", args.annotations)
     print("Logs: ", args.logs)
+    print("Image: ", args.image)
 
     # Configurations
     if args.command == "train":
@@ -214,7 +270,6 @@ if __name__ == '__main__':
             # one image at a time. Batch size = GPU_COUNT * IMAGES_PER_GPU
             GPU_COUNT = 1
             IMAGES_PER_GPU = 1
-            DETECTION_MIN_CONFIDENCE = 0
         config = InferenceConfig()
     config.display()
 
@@ -229,6 +284,8 @@ if __name__ == '__main__':
     # Select weights file to load
     if args.weights.lower() == "coco":
         weights_path = COCO_WEIGHTS_PATH
+        if not os.path.exists(weights_path):
+            utils.download_trained_weights(weights_path)
     elif args.weights.lower() == "last":
         weights_path = model.find_last()
     elif args.weights.lower() == "imagenet":
@@ -247,28 +304,11 @@ if __name__ == '__main__':
     else:
         model.load_weights(weights_path, by_name=True)
 
-    # Train or evaluate
+    # Train or inference
     if args.command == "train":
-        # Training dataset. Use the training set and 35K from the
-        # validation set, as as in the Mask RCNN paper.
-        dataset_train = CocoDataset()
-        dataset_train.load_coco(args.dataset, args.annotations, "train")
-        dataset_train.prepare()
-
-        # Validation dataset
-        dataset_val = CocoDataset()
-        dataset_val.load_coco(args.dataset, args.annotations, "val")
-        dataset_val.prepare()
-
-        # *** This training schedule is an example. Update to your needs ***
-        # Since we're using a very small dataset, and starting from
-        # COCO trained weights, we don't need to train too long. Also,
-        # no need to train all layers, just the heads should do it.
-        print("Training network heads")
-        model.train(dataset_train, dataset_val,
-                    learning_rate=config.LEARNING_RATE,
-                    epochs=30,
-                    layers='heads')
+        train(model)
+    elif args.command == "inference":
+        detect_and_color_splash(model, image_path=args.image)
     else:
         print("'{}' is not recognized. "
-              "Use 'train' or 'evaluate'".format(args.command))
+              "Use 'train' or 'inference'".format(args.command))
