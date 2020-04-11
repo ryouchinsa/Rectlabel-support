@@ -34,7 +34,7 @@ def getClassId(name, label_map_dict):
             return object_id
     return -1
 
-def dict_to_tf_example(data, image_path, annotations_dir, masks_dir, label_map_dict):
+def dict_to_tf_example(data, image_path, masks_dir, label_map_dict):
     with tf.gfile.GFile(image_path, 'rb') as fid:
         encoded_jpg = fid.read()
     encoded_jpg_io = io.BytesIO(encoded_jpg)
@@ -116,7 +116,7 @@ def process_images(image_files, output_path):
             xml_str = fid.read()
         xml = etree.fromstring(xml_str)
         data = dataset_util.recursive_parse_xml_to_dict(xml)['annotation']
-        tf_example = dict_to_tf_example(data, image_path, annotations_dir, FLAGS.masks_dir, label_map_dict)
+        tf_example = dict_to_tf_example(data, image_path, FLAGS.masks_dir, label_map_dict)
         writer.write(tf_example.SerializeToString())
     writer.close()
 
