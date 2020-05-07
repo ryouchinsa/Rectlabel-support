@@ -74,10 +74,7 @@ def create_tf_example(image_path,
                 rle = mask.merge(rles)
                 m = mask.decode(rle)
             else:
-                m = mask.decode(segm)     
-                mask_shape = m.shape
-                m = np.ravel(m, order='F')
-                m = m.reshape(mask_shape, order='C')  
+                m = mask.decode(segm) 
             pil_image = PIL.Image.fromarray(m)
             output_io = io.BytesIO()
             pil_image.save(output_io, format='PNG')

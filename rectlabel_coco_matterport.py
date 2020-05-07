@@ -156,10 +156,7 @@ class CocoDataset(utils.Dataset):
             m = maskUtils.decode(rle)
         else:
             # rle
-            m = maskUtils.decode(segm)     
-            mask_shape = m.shape
-            m = np.ravel(m, order='F')
-            m = m.reshape(mask_shape, order='C')           
+            m = maskUtils.decode(segm)   
         if DUMP_MASK_IMAGES:
             m[m > 0] = 255
             pil_image = PIL.Image.fromarray(m)
