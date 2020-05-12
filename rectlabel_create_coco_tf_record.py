@@ -113,6 +113,9 @@ def _create_tf_record_from_coco_annotations(tf_record_close_stack, category_inde
         image_file = image_files[idx]
         image_path = os.path.join(FLAGS.images_dir, image_file)
         print(idx, image_path)
+        if image_id not in annotations_index:
+            print(image_path + ' does not have annotations')
+            continue
         annotations_list = annotations_index[image_id]
         tf_example = create_tf_example(image_path, images[image_id - 1], annotations_list, category_index, include_masks)
         shard_idx = idx % num_shards

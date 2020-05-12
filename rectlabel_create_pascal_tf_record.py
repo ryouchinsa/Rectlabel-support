@@ -112,6 +112,9 @@ def process_images(image_files, output_path):
         image_path = os.path.join(FLAGS.images_dir, image_file)
         print(idx, image_path)
         annotation_path = os.path.join(annotations_dir, os.path.splitext(image_file)[0] + '.xml')
+        if not os.path.exists(annotation_path):
+            print(annotation_path + ' not exists')
+            continue;
         with tf.gfile.GFile(annotation_path, 'r') as fid:
             xml_str = fid.read()
         xml = etree.fromstring(xml_str)
