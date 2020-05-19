@@ -16,7 +16,7 @@ Have questions? Send an email to support@rectlabel.com
 Thank you.
 
 # Key features
-- Draw bounding box, polygon, and cubic bezier
+- Draw bounding box, polygon, cubic bezier, and line
 - Draw keypoints with a skeleton
 - Label the whole image without drawing boxes
 - Label pixels with brush and superpixel tools
