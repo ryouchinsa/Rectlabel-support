@@ -32,7 +32,7 @@ Thank you.
 ![alt text](https://static.rectlabel.com/waysify_app/img/draw.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/edit_points.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/mask.jpg)
-![alt text](https://static.rectlabel.com/waysify_app/img/keypoints.jpg)
+![alt text](https://static.rectlabel.com/waysify_app/img/keypoints.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/brush.jpg??)
 ![alt text](https://static.rectlabel.com/waysify_app/img/superpixel.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/coreml.jpg)
