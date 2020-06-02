@@ -1,12 +1,17 @@
 # Rectlabel-support
-This is the support page for "RectLabel for object detection" on Mac App Store.
+This is the support page for our macOS apps.
+
+"RectLabel for object detection"
 https://itunes.apple.com/app/id1210181730
 
-"RectLabel - One-time payment" is a paid up-front version.
+"RectLabel - One-time payment"
 https://itunes.apple.com/app/id1490990105
 
-How to use RectLabel.
+Help
 https://rectlabel.com/help
+
+Pricing
+https://rectlabel.com/pricing
 
 Post the problem to our Github issues page
 https://github.com/ryouchinsa/Rectlabel-support/issues
