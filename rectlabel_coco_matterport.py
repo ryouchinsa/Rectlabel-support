@@ -1,10 +1,10 @@
 """
 
 # Train a new model starting from pre-trained COCO weights
-python rectlabel_coco_matterport.py train --dataset=${DATASETS_DIR}/shoes --annotations=annotations.json --weights=coco
+python rectlabel_coco_matterport.py train --dataset=${DATASET_DIR} --annotations=annotations.json --weights=coco
 
 # Resume training a model that you had trained earlier
-python rectlabel_coco_matterport.py train --dataset=${DATASETS_DIR}/shoes --annotations=annotations.json --weights=last
+python rectlabel_coco_matterport.py train --dataset=${DATASET_DIR} --annotations=annotations.json --weights=last
 
 # Apply color splash to an image
 python rectlabel_coco_matterport.py splash --weights=last --image=${IMAGE_PATH}
