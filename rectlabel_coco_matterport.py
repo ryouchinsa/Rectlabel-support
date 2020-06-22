@@ -1,14 +1,21 @@
 """
 
 # Train a new model starting from pre-trained COCO weights
-python matterport_coco_rectlabel.py train --dataset=/Users/ryo/rcam/Mask_RCNN-master/datasets/fashion --annotations=annotations_rle.json --weights=coco
+python rectlabel_coco_matterport.py train --dataset=${DATASETS_DIR}/shoes --annotations=annotations.json --weights=coco
+
+# Resume training a model that you had trained earlier
+python rectlabel_coco_matterport.py train --dataset=${DATASETS_DIR}/shoes --annotations=annotations.json --weights=last
+
+# Apply color splash to an image
+python rectlabel_coco_matterport.py splash --weights=last --image=${IMAGE_PATH}
 
 """
 
 import os
 import sys
-import time
+import datetime
 import numpy as np
+import skimage.draw
 import PIL.Image
 
 from pycocotools.coco import COCO
@@ -234,10 +241,10 @@ if __name__ == '__main__':
     parser.add_argument("command",
                         metavar="<command>",
                         help="'train' or 'inference'")
-    parser.add_argument('--dataset', required=True,
+    parser.add_argument('--dataset', required=False,
                         metavar="/path/to/dataset/",
                         help='Directory of the dataset')
-    parser.add_argument('--annotations', required=True,
+    parser.add_argument('--annotations', required=False,
                         metavar="annotations.json",
                         help='The COCO JSON file')
     parser.add_argument('--weights', required=True,
@@ -304,7 +311,7 @@ if __name__ == '__main__':
     # Train or inference
     if args.command == "train":
         train(model)
-    elif args.command == "inference":
+    elif args.command == "splash":
         detect_and_color_splash(model, image_path=args.image)
     else:
         print("'{}' is not recognized. "
