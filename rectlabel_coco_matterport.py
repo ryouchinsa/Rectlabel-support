@@ -1,16 +1,3 @@
-"""
-
-# Train a new model starting from pre-trained COCO weights
-python rectlabel_coco_matterport.py train --dataset=${DATASET_DIR} --annotations=annotations.json --weights=coco
-
-# Resume training a model that you had trained earlier
-python rectlabel_coco_matterport.py train --dataset=${DATASET_DIR} --annotations=annotations.json --weights=last
-
-# Apply color splash to an image
-python rectlabel_coco_matterport.py splash --weights=last --image=${IMAGE_PATH}
-
-"""
-
 import os
 import sys
 import datetime
@@ -224,7 +211,7 @@ def detect_and_color_splash(model, image_path):
     # Color splash
     splash = color_splash(image, r['masks'])
     # Save output
-    file_name = "splash_{:%Y%m%dT%H%M%S}.png".format(datetime.datetime.now())
+    file_name = "inference_{:%Y%m%dT%H%M%S}.png".format(datetime.datetime.now())
     skimage.io.imsave(file_name, splash)
     print("Saved to ", file_name)
 
@@ -311,7 +298,7 @@ if __name__ == '__main__':
     # Train or inference
     if args.command == "train":
         train(model)
-    elif args.command == "splash":
+    elif args.command == "inference":
         detect_and_color_splash(model, image_path=args.image)
     else:
         print("'{}' is not recognized. "

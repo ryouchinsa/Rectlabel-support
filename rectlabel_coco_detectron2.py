@@ -1,16 +1,3 @@
-"""
-
-# Train a new model starting from pre-trained COCO weights
-python rectlabel_coco_detectron2.py train --images_dir=${IMAGES_DIR} --annotations=${ANNOTATIONS} --weights=coco
-
-# Resume training a model that you had trained earlier
-python rectlabel_coco_detectron2.py train --images_dir=${IMAGES_DIR} --annotations=${ANNOTATIONS} --weights=last
-
-# Apply inference to an image
-python rectlabel_coco_detectron2.py inference --weights=last --image=${IMAGE}
-
-"""
-
 import os
 import sys
 import datetime
@@ -42,7 +29,7 @@ def setWeights(args, cfg):
         cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
 
 def train(args):
-    register_coco_instances("my_dataset_train", {}, args.annotations, args.images_dir)
+    register_coco_instances("my_dataset_train", {}, args.annotations_path, args.images_dir)
     cfg = get_cfg()
     cfg.merge_from_file(model_zoo.get_config_file("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"))
     cfg.DATASETS.TRAIN = ("my_dataset_train",)
@@ -92,9 +79,9 @@ if __name__ == '__main__':
     parser.add_argument('--images_dir', required=False,
                         metavar="images_dir",
                         help='images_dir')
-    parser.add_argument('--annotations', required=False,
-                        metavar="annotations.json",
-                        help='annotations.json')
+    parser.add_argument('--annotations_path', required=False,
+                        metavar="annotations_path",
+                        help='annotations_path')
     parser.add_argument('--weights', required=True,
                         metavar="'coco' or 'last'",
                         help="'coco' or 'last'")
@@ -104,7 +91,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     print("command: ", args.command)
     print("images_dir: ", args.images_dir)
-    print("annotations: ", args.annotations)
+    print("annotations_path: ", args.annotations_path)
     print("image: ", args.image)
     if args.command == "train":
         train(args)

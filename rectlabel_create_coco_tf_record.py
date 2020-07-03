@@ -17,7 +17,7 @@ flags = tf.app.flags
 flags.DEFINE_string('images_dir', '', 'Full path to images folder.')
 flags.DEFINE_string('train_txt_path', '', 'Full path to train.txt.')
 flags.DEFINE_string('val_txt_path', '', 'Full path to val.txt.')
-flags.DEFINE_string('annotations_file', '', 'Full path to annotations JSON file.')
+flags.DEFINE_string('annotations_path', '', 'Full path to annotations JSON file.')
 flags.DEFINE_string('output_dir', '', 'Full path to output directory.')
 flags.DEFINE_boolean('include_masks', False, 'To train Mask-RCNN, add --include_masks.')
 FLAGS = flags.FLAGS
@@ -152,10 +152,10 @@ def main(_):
         tf.gfile.MakeDirs(FLAGS.output_dir)
     train_images = dataset_util.read_examples_list(FLAGS.train_txt_path)
     val_images = dataset_util.read_examples_list(FLAGS.val_txt_path)
-    annotations_file = FLAGS.annotations_file
+    annotations_path = FLAGS.annotations_path
     train_output_path = os.path.join(FLAGS.output_dir, 'train.record')
     val_output_path = os.path.join(FLAGS.output_dir, 'val.record')
-    with contextlib2.ExitStack() as tf_record_close_stack, tf.gfile.GFile(annotations_file, 'r') as fid:
+    with contextlib2.ExitStack() as tf_record_close_stack, tf.gfile.GFile(annotations_path, 'r') as fid:
         groundtruth_data = json.load(fid)
         category_index = label_map_util.create_category_index(groundtruth_data['categories'])
         images = groundtruth_data['images']
