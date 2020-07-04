@@ -26,14 +26,34 @@ def setWeights(args, cfg):
     if args.weights.lower() == "last":
         cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, "model_final.pth")
     else:
-        cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
+        if args.type.lower() == "maskrcnn":
+            cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
+        else:
+            cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-Keypoints/keypoint_rcnn_R_50_FPN_3x.yaml")
+
+def setNumClasses(cfg):
+    cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1 # only has one class (ballon)
+
+def setClasses(dataset_name):
+    MetadataCatalog.get(dataset_name).thing_classes = ["person"]
+
+def setKeypoints(dataset_name):
+    MetadataCatalog.get(dataset_name).keypoint_names = ["head", "neck", "rshoulder", "relbow", "rwrist", "lshoulder", "lelbow", "lwrist", "rhip", "rknee", "rankle", "lhip", "lknee", "lankle"]
+    MetadataCatalog.get(dataset_name).keypoint_flip_map = [("rshoulder", "lshoulder"), ("relbow", "lelbow"), ("rwrist", "lwrist"), ("rhip", "lhip"), ("rknee", "lknee"), ("rankle", "lankle")]
+    MetadataCatalog.get(dataset_name).keypoint_connection_rules = [("head", "neck", (0, 255, 255)), ("neck", "lshoulder", (0, 255, 255)), ("lshoulder", "lelbow", (0, 255, 255)), ("lelbow", "lwrist", (0, 255, 255)), ("neck", "rshoulder", (0, 255, 255)), ("rshoulder", "relbow", (0, 255, 255)), ("relbow", "rwrist", (0, 255, 255)), ("neck", "lhip", (0, 255, 255)), ("lhip", "lknee", (0, 255, 255)), ("lknee", "lankle", (0, 255, 255)), ("neck", "rhip", (0, 255, 255)), ("rhip", "rknee", (0, 255, 255)), ("rknee", "rankle", (0, 255, 255))]
 
 def train(args):
-    register_coco_instances("my_dataset_train", {}, args.annotations_path, args.images_dir)
+    dataset_name = "dataset_train"
+    register_coco_instances(dataset_name, {}, args.annotations_path, args.images_dir)
     cfg = get_cfg()
-    cfg.merge_from_file(model_zoo.get_config_file("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"))
-    cfg.DATASETS.TRAIN = ("my_dataset_train",)
-    cfg.DATASETS.TEST = ()
+    if args.type.lower() == "maskrcnn":
+        cfg.merge_from_file(model_zoo.get_config_file("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"))
+    else:
+        cfg.merge_from_file(model_zoo.get_config_file("COCO-Keypoints/keypoint_rcnn_R_50_FPN_3x.yaml"))
+        setKeypoints(dataset_name)
+        cfg.MODEL.ROI_KEYPOINT_HEAD.NUM_KEYPOINTS = 14
+    cfg.DATASETS.TRAIN = (dataset_name,)
+    cfg.DATASETS.TEST = ()                
     cfg.INPUT.MASK_FORMAT = 'bitmask'
     cfg.DATALOADER.NUM_WORKERS = 2
     setWeights(args, cfg)
@@ -41,27 +61,31 @@ def train(args):
     cfg.SOLVER.BASE_LR = 0.00025  # pick a good LR
     cfg.SOLVER.MAX_ITER = 500    # 300 iterations seems good enough for this toy dataset; you may need to train longer for a practical dataset
     cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128   # faster, and good enough for this toy dataset (default: 512)
-    cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1  # only has one class (ballon)
+    setNumClasses(cfg)
     os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
-    trainer = DefaultTrainer(cfg) 
+    trainer = DefaultTrainer(cfg)
     trainer.resume_or_load(resume=False)
     trainer.train()
 
 def inference(args):
+    dataset_name = "dataset_val"
     im = cv2.imread(args.image)
     cfg = get_cfg()
-    cfg.merge_from_file(model_zoo.get_config_file("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"))
+    if args.type.lower() == "maskrcnn":
+        cfg.merge_from_file(model_zoo.get_config_file("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"))
+    else:
+        cfg.merge_from_file(model_zoo.get_config_file("COCO-Keypoints/keypoint_rcnn_R_50_FPN_3x.yaml"))
+        setKeypoints(dataset_name)
+        cfg.MODEL.ROI_KEYPOINT_HEAD.NUM_KEYPOINTS = 14
     setWeights(args, cfg)
+    setNumClasses(cfg)
+    setClasses(dataset_name)
     cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5
-    cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1
-    MetadataCatalog.get("mydataset").thing_classes = ["shoes"]
     predictor = DefaultPredictor(cfg)
     outputs = predictor(im)
     print(outputs["instances"].pred_boxes)
     v = Visualizer(im[:, :, ::-1], 
-        MetadataCatalog.get("mydataset"), 
-        scale=0.8, 
-        instance_mode=ColorMode.IMAGE_BW)
+        MetadataCatalog.get(dataset_name))
     out = v.draw_instance_predictions(outputs["instances"].to("cpu"))
     file_name = "inference_{:%Y%m%dT%H%M%S}.png".format(datetime.datetime.now())
     out.save(file_name)
@@ -76,6 +100,9 @@ if __name__ == '__main__':
     parser.add_argument("command",
                         metavar="<command>",
                         help="'train' or 'inference'")
+    parser.add_argument('--type', required=True,
+                        metavar="'maskrcnn' or 'keypoint'",
+                        help="'maskrcnn' or 'keypoint'")
     parser.add_argument('--images_dir', required=False,
                         metavar="images_dir",
                         help='images_dir')
@@ -90,8 +117,10 @@ if __name__ == '__main__':
                         help='image')
     args = parser.parse_args()
     print("command: ", args.command)
+    print("type: ", args.type)
     print("images_dir: ", args.images_dir)
     print("annotations_path: ", args.annotations_path)
+    print("weights: ", args.weights)
     print("image: ", args.image)
     if args.command == "train":
         train(args)
