@@ -7,7 +7,7 @@ https://itunes.apple.com/app/id1210181730
 "RectLabel - One-time payment"
 https://itunes.apple.com/app/id1490990105
 
-Help
+How to use RectLabel
 https://rectlabel.com/help
 
 Post the problem to our Github issues page
