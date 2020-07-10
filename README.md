@@ -10,9 +10,6 @@ https://itunes.apple.com/app/id1490990105
 Help
 https://rectlabel.com/help
 
-Pricing
-https://rectlabel.com/pricing
-
 Post the problem to our Github issues page
 https://github.com/ryouchinsa/Rectlabel-support/issues
 
