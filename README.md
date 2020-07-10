@@ -1,5 +1,5 @@
 # Rectlabel-support
-This is the support page for our macOS apps.
+This is the support page for RectLabel apps.
 
 "RectLabel for object detection"
 https://itunes.apple.com/app/id1210181730
