@@ -20,14 +20,12 @@ Thank you.
 # Key features
 - Draw bounding box, polygon, cubic bezier, and line
 - Draw keypoints with a skeleton
-- Label the whole image without drawing boxes
 - Label pixels with brush and superpixel tools
-- Automatically label images using Core ML model
-- 1-click buttons make your labeling work faster
+- Automatically label images using Core ML models
 - Customize the label dialog to combine with attributes
 - Settings for objects, attributes, hotkeys, and labeling fast
 - Read and write in the PASCAL VOC XML format
-- Export to YOLO, Create ML, COCO JSON, and CSV format
+- Export to YOLO, Create ML, COCO JSON, and CSV formats
 - Export index color mask image and separated mask images
 
 # ScreenShots
@@ -38,6 +36,5 @@ Thank you.
 ![alt text](https://static.rectlabel.com/waysify_app/img/brush.jpg??)
 ![alt text](https://static.rectlabel.com/waysify_app/img/superpixel.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/coreml.jpg)
-![alt text](https://static.rectlabel.com/waysify_app/img/1-click.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/dialog.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/objects.jpg)
