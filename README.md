@@ -4,9 +4,6 @@ This is the support page for RectLabel apps.
 "RectLabel for object detection"
 https://itunes.apple.com/app/id1210181730
 
-"RectLabel - One-time payment"
-https://itunes.apple.com/app/id1490990105
-
 How to use RectLabel
 https://rectlabel.com/help
 
