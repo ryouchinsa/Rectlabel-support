@@ -2,7 +2,7 @@
 This is the support page for "RectLabel for object detection".
 https://itunes.apple.com/app/id1210181730
 
-How to use RectLabel
+Help
 https://rectlabel.com/help
 
 Post the problem to our Github issues page
