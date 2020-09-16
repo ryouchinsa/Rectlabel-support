@@ -17,7 +17,6 @@ Thank you.
 - Draw keypoints with a skeleton
 - Label pixels with brush and superpixel tools
 - Automatically label images using Core ML models
-- Customize the label dialog to combine with attributes
 - Settings for objects, attributes, hotkeys, and labeling fast
 - Read and write in the PASCAL VOC XML format
 - Export to YOLO, Create ML, COCO JSON, and CSV formats
@@ -31,5 +30,4 @@ Thank you.
 ![alt text](https://static.rectlabel.com/waysify_app/img/brush.jpg??)
 ![alt text](https://static.rectlabel.com/waysify_app/img/superpixel.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/coreml.jpg)
-![alt text](https://static.rectlabel.com/waysify_app/img/dialog.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/objects.jpg)
