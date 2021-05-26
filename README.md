@@ -10,7 +10,7 @@ Have questions? Send an email to support@rectlabel.com
 Thank you.
 
 # Key features
-- Draw bounding box, polygon, cubic bezier, and line
+- Draw bounding box, polygon, cubic bezier, line, and point
 - Draw keypoints with a skeleton
 - Label pixels with brush and superpixel tools
 - Automatically label images using Core ML models
