@@ -18,6 +18,7 @@ Thank you.
 - Read and write in PASCAL VOC XML format
 - Export to YOLO, Create ML, COCO JSON, and CSV formats
 - Export index color mask image and separated mask images
+- Augment images, resize images, video to frames, etc.
 
 # ScreenShots
 ![alt text](https://static.rectlabel.com/waysify_app/img/draw.jpg)
