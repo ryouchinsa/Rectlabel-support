@@ -1,4 +1,4 @@
-# Rectlabel-support
+# RectLabel-support
 This is the support page for "RectLabel for object detection".
 https://itunes.apple.com/app/id1210181730
 
