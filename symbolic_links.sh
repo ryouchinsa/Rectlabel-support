@@ -14,7 +14,9 @@ do
   do
     if [ "$extension" == "$imgExtension" ]; then
       dstFile="${dstFolder}/${filename}"
-      ln -s "$file" "$dstFile"
+      if [ ! -e "$dstFile" ]; then
+        ln -s "$file" "$dstFile"
+      fi
       break
     fi
   done
