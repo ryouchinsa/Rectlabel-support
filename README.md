@@ -15,6 +15,7 @@ Thank you.
 - Label pixels with brush and superpixel tools
 - Automatically label images using Core ML models
 - Settings for objects, attributes, hotkeys, and labeling fast
+- Search object/attribute names and image names
 - Read/write in PASCAL VOC xml or YOLO text format
 - Export to YOLO, Create ML, COCO JSON, and CSV formats
 - Export index color mask image and separated mask images
