@@ -26,7 +26,7 @@ Thank you.
 - Video to frames, augment images, etc.
 
 # ScreenShots
-![alt text](https://static.rectlabel.com/waysify_app/img/draw_bbox.jpg??)
+![alt text](https://static.rectlabel.com/waysify_app/img/draw_bbox.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/draw_obb.jpg??)
 ![alt text](https://static.rectlabel.com/waysify_app/img/draw_polygon.jpg??)
 ![alt text](https://static.rectlabel.com/waysify_app/img/edit_points.jpg??)
