@@ -1,7 +1,6 @@
 import coremltools
 
 coreml_model = coremltools.models.MLModel('yolov5s.mlmodel')
-
 labels = [
     "person", "bicycle", "car", "motorbike", "aeroplane", "bus", "train", "truck", "boat", "traffic light",
     "fire hydrant", "stop sign", "parking meter", "bench", "bird", "cat", "dog", "horse", "sheep", "cow",
@@ -13,5 +12,4 @@ labels = [
     "toaster", "sink", "refrigerator", "book", "clock", "vase", "scissors", "teddy bear", "hair drier", "toothbrush"
 ]
 coreml_model.user_defined_metadata['classes'] = ",".join(labels)
-
 coreml_model.save('yolov5s.mlmodel')
