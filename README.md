@@ -34,7 +34,7 @@ Thank you.
 ![alt text](https://static.rectlabel.com/waysify_app/img/keypoints.jpg???)
 ![alt text](https://static.rectlabel.com/waysify_app/img/keypoints_pixels_coco.jpg???)
 ![alt text](https://static.rectlabel.com/waysify_app/img/brush.jpg????)
-![alt text](https://static.rectlabel.com/waysify_app/img/superpixel.jpg????)
+![alt text](https://static.rectlabel.com/waysify_app/img/superpixel.jpg?????)
 ![alt text](https://static.rectlabel.com/waysify_app/img/objects.jpg???)
 ![alt text](https://static.rectlabel.com/waysify_app/img/coreml.jpg???)
 ![alt text](https://static.rectlabel.com/waysify_app/img/1-click.jpg???)
