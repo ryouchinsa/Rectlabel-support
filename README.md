@@ -41,4 +41,4 @@ Thank you.
 ![alt text](https://static.rectlabel.com/waysify_app/img/auto_suggest.jpg???)
 ![alt text](https://static.rectlabel.com/waysify_app/img/search.jpg????)
 ![alt text](https://static.rectlabel.com/waysify_app/img/video_to_frames.jpg???)
-![alt text](https://static.rectlabel.com/waysify_app/img/augment.jpg???)
+![alt text](https://static.rectlabel.com/waysify_app/img/augment.jpg????)
