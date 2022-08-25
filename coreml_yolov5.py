@@ -1,15 +1,18 @@
+import yaml
 import coremltools
 
-coreml_model = coremltools.models.MLModel('yolov5s.mlmodel')
-labels = [
-    "person", "bicycle", "car", "motorbike", "aeroplane", "bus", "train", "truck", "boat", "traffic light",
-    "fire hydrant", "stop sign", "parking meter", "bench", "bird", "cat", "dog", "horse", "sheep", "cow",
-    "elephant", "bear", "zebra", "giraffe", "backpack", "umbrella", "handbag", "tie", "suitcase", "frisbee",
-    "skis", "snowboard", "sports ball", "kite", "baseball bat", "baseball glove", "skateboard", "surfboard", "tennis racket", "bottle",
-    "wine glass", "cup", "fork", "knife", "spoon", "bowl", "banana", "apple", "sandwich", "orange",
-    "broccoli", "carrot", "hot dog", "pizza", "donut", "cake", "chair", "sofa", "pottedplant", "bed",
-    "diningtable", "toilet", "tvmonitor", "laptop", "mouse", "remote", "keyboard", "cell phone", "microwave", "oven",
-    "toaster", "sink", "refrigerator", "book", "clock", "vase", "scissors", "teddy bear", "hair drier", "toothbrush"
-]
+yaml_file = '/Users/ryo/Downloads/yolov5/data/coco128.yaml'
+coreml_file = '/Users/ryo/Downloads/yolov5/yolov5m.mlmodel'
+
+with open(yaml_file) as file:
+    obj = yaml.safe_load(file)
+    names = obj['names']
+    if type(names) == dict:
+        labels = [v for (k, v) in names.items()]
+    else:
+        labels = names
+    print(labels)
+
+coreml_model = coremltools.models.MLModel(coreml_file)
 coreml_model.user_defined_metadata['classes'] = ",".join(labels)
-coreml_model.save('yolov5s.mlmodel')
+coreml_model.save(coreml_file)
