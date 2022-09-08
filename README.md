@@ -16,7 +16,7 @@ Thank you.
 - Draw keypoints with a skeleton
 - Label pixels with brush and superpixel tools
 - Read/write in PASCAL VOC xml or YOLO text format
-- Export to YOLO, Create ML, COCO JSON, and CSV formats
+- Export to Create ML, COCO JSON, YOLO, DOTA, and CSV formats
 - Export index color mask image and separated mask images
 - Settings for objects, attributes, hotkeys, and labeling fast
 - Automatically label images using Core ML models
@@ -33,7 +33,7 @@ Thank you.
 ![alt text](https://static.rectlabel.com/waysify_app/img/mask.jpg???)
 ![alt text](https://static.rectlabel.com/waysify_app/img/keypoints.jpg???)
 ![alt text](https://static.rectlabel.com/waysify_app/img/keypoints_pixels_coco.jpg???)
-![alt text](https://static.rectlabel.com/waysify_app/img/brush.jpg????)
+![alt text](https://static.rectlabel.com/waysify_app/img/brush.jpg?????)
 ![alt text](https://static.rectlabel.com/waysify_app/img/superpixel.jpg?????)
 ![alt text](https://static.rectlabel.com/waysify_app/img/objects.jpg???)
 ![alt text](https://static.rectlabel.com/waysify_app/img/coreml.jpg???)
