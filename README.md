@@ -1,6 +1,11 @@
 # Rectlabel-support
-This is the support page for "RectLabel for object detection".
-https://itunes.apple.com/app/id1210181730
+This is the support page for RectLabel apps.
+
+RectLabel
+https://apps.apple.com/app/id1210181730
+
+RectLabel Pro
+https://apps.apple.com/app/id1490990105
 
 Post the problem to our Github issues page
 https://github.com/ryouchinsa/Rectlabel-support/issues
