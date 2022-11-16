@@ -14,10 +14,11 @@ Thank you.
 - Draw oriented bounding boxes in aerial images
 - Draw polygons, cubic bezier curves, line segments, and points
 - Draw keypoints with a skeleton
-- Label pixels with brush and superpixel tools
-- Read/write in PASCAL VOC xml or YOLO text format
-- Export to Create ML, COCO JSON, YOLO, DOTA, and CSV formats
-- Export index color mask image and separated mask images
+- Draw pixels with brushes and superpixels
+- Read/write in PASCAL VOC xml format
+- Export to CreateML object detection and image classification formats
+- Export to COCO JSON, YOLO, DOTA, and CSV formats
+- Export indexed color mask image and grayscale mask images
 - Settings for objects, attributes, hotkeys, and labeling fast
 - Customize the label dialog to combine with attributes
 - 1-click buttons speed up selecting the object name
