@@ -1,7 +1,5 @@
 # Rectlabel-support
-This is the support page for RectLabel apps.
-
-RectLabel
+This is the support page for RectLabel.
 https://apps.apple.com/app/id1210181730
 
 Post the problem to our Github issues page
