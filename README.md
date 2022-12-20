@@ -16,7 +16,7 @@ Thank you.
 - Draw pixels with brushes and superpixels
 - Read/write in PASCAL VOC xml and YOLO text formats
 - Export to CreateML object detection and image classification formats
-- Export to COCO JSON, YOLO, DOTA, and CSV formats
+- Export to COCO, Labelme, YOLO, DOTA, and CSV formats
 - Export indexed color mask image and grayscale mask images
 - Settings for objects, attributes, hotkeys, and labeling fast
 - Customize the label dialog to combine with attributes
