@@ -43,6 +43,7 @@ Thank you.
 ![alt text](https://static.rectlabel.com/waysify_app/img/auto_suggest.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/search.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/coreml.jpg?)
+![alt text](https://static.rectlabel.com/waysify_app/img/coreml_polygon.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/coreml_seg.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/ocr.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/video_to_frames.jpg)
