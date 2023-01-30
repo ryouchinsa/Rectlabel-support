@@ -22,7 +22,7 @@ Thank you.
 - Customize the label dialog to combine with attributes
 - 1-click buttons speed up selecting the object name
 - Auto-suggest works for more than 5000 object names
-- Search object/attribute names and image names
+- Search object, attribute, and image names in a gallery view
 - Automatically label images using Core ML models
 - Automatic text recognition using OCR
 - Video to frames, augment images, etc.
@@ -41,7 +41,7 @@ Thank you.
 ![alt text](https://static.rectlabel.com/waysify_app/img/dialog.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/1-click.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/auto_suggest.jpg)
-![alt text](https://static.rectlabel.com/waysify_app/img/search.jpg?)
+![alt text](https://static.rectlabel.com/waysify_app/img/search.jpg??)
 ![alt text](https://static.rectlabel.com/waysify_app/img/coreml.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/coreml_polygon.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/coreml_seg.jpg)
