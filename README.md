@@ -41,7 +41,7 @@ Thank you.
 ![alt text](https://static.rectlabel.com/waysify_app/img/dialog.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/1-click.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/auto_suggest.jpg)
-![alt text](https://static.rectlabel.com/waysify_app/img/search.jpg??)
+![alt text](https://static.rectlabel.com/waysify_app/img/search.jpg???)
 ![alt text](https://static.rectlabel.com/waysify_app/img/coreml.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/coreml_polygon.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/coreml_seg.jpg)
