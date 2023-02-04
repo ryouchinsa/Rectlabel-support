@@ -31,7 +31,7 @@ Thank you.
 ![alt text](https://static.rectlabel.com/waysify_app/img/draw_polygon.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/edit_points.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/mask.jpg)
-![alt text](https://static.rectlabel.com/waysify_app/img/draw_obb.jpg)
+![alt text](https://static.rectlabel.com/waysify_app/img/draw_obb.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/keypoints.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/keypoints_pixels_coco.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/brush.jpg?)
