@@ -16,11 +16,6 @@ for contour in contours:
     polygon = contour_approx.flatten().tolist()
     polygons.append(polygon)
 cv2.drawContours(image, contours_approx, -1, 128, line_width)
-for polygon in polygons:
-    i = 0
-    while(i < len(polygon)):
-        cv2.circle(image, [polygon[i], polygon[i + 1]], line_width, 255, -1)
-        i += 2
 cv2.imwrite('polygons.png', image)
 
 
