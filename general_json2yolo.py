@@ -251,7 +251,7 @@ def convert_ath_json(json_dir):  # dir contains json annotations and images
     print(f'Done. Output saved to {Path(dir).absolute()}')
 
 
-def convert_coco_json(json_dir='../coco/annotations/', use_segments=False, cls91to80=False):
+def convert_coco_json(json_dir='../coco/annotations/', use_segments=False, use_keypoints=False, cls91to80=False):
     save_dir = make_dirs()  # output directory
     coco80 = coco91_to_coco80_class()
 
@@ -269,6 +269,9 @@ def convert_coco_json(json_dir='../coco/annotations/', use_segments=False, cls91
         for ann in data['annotations']:
             imgToAnns[ann['image_id']].append(ann)
 
+        if use_keypoints:
+            show_kpt_shape_flip_idx(data)
+
         # Write labels file
         for img_id, anns in tqdm(imgToAnns.items(), desc=f'Annotations {json_file}'):
             img = images['%g' % img_id]
@@ -276,6 +279,7 @@ def convert_coco_json(json_dir='../coco/annotations/', use_segments=False, cls91
 
             bboxes = []
             segments = []
+            keypoints = []
             for ann in anns:
                 if ann['iscrowd']:
                     continue
@@ -291,7 +295,6 @@ def convert_coco_json(json_dir='../coco/annotations/', use_segments=False, cls91
                 box = [cls] + box.tolist()
                 if box not in bboxes:
                     bboxes.append(box)
-                # Segments
                 if use_segments:
                     if len(ann['segmentation']) == 0:
                         segments.append([])
@@ -307,12 +310,43 @@ def convert_coco_json(json_dir='../coco/annotations/', use_segments=False, cls91
                     s = [cls] + s
                     if s not in segments:
                         segments.append(s)
+                if use_keypoints:
+                    k = (np.array(ann['keypoints']).reshape(-1, 3) / np.array([w, h, 1])).reshape(-1).tolist()
+                    k = box + k
+                    keypoints.append(k)
 
             # Write
             with open((fn / f).with_suffix('.txt'), 'a') as file:
                 for i in range(len(bboxes)):
-                    line = *(segments[i] if use_segments and len(segments[i]) > 0 else bboxes[i]),  # cls, box or segments
+                    if use_keypoints:
+                        line = *(keypoints[i]),  # cls, box or segments
+                    else:
+                        line = *(segments[i] if use_segments and len(segments[i]) > 0 else bboxes[i]),  # cls, box or segments
                     file.write(('%g ' * len(line)).rstrip() % line + '\n')
+
+
+def show_kpt_shape_flip_idx(data):
+    for category in data['categories']:
+        if 'keypoints' not in category:
+            continue
+        keypoints = category['keypoints']
+        num = len(keypoints)
+        print('kpt_shape: [' + str(num) + ', 3]')
+        flip_idx = list(range(num))
+        for i, name in enumerate(keypoints):
+            name = name.lower()
+            left_pos = name.find('left')
+            if left_pos < 0:
+                continue
+            name_right = name.replace('left', 'right')
+            for j, namej in enumerate(keypoints):
+                namej = namej.lower()
+                if namej == name_right:
+                    flip_idx[i] = j
+                    flip_idx[j] = i
+                    break
+        print('flip_idx: [' + ', '.join(str(x) for x in flip_idx) + ']')
+
 
 def rle2polygon(segmentation):
     m = mask.decode(segmentation) 
@@ -325,6 +359,7 @@ def rle2polygon(segmentation):
         polygon = contour_approx.flatten().tolist()
         polygons.append(polygon)
     return polygons
+
 
 def min_index(arr1, arr2):
     """Find a pair of indexes with the shortest distance. 
@@ -402,7 +437,8 @@ if __name__ == '__main__':
 
     if source == 'COCO':
         convert_coco_json('../datasets/coco/annotations',  # directory with *.json
-                          use_segments=True,
+                          use_segments=False,
+                          use_keypoints=True,
                           cls91to80=False)
 
     elif source == 'infolks':  # Infolks https://infolks.info/
