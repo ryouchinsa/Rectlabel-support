@@ -319,7 +319,7 @@ def convert_coco_json(json_dir='../coco/annotations/', use_segments=False, use_k
             with open((fn / f).with_suffix('.txt'), 'a') as file:
                 for i in range(len(bboxes)):
                     if use_keypoints:
-                        line = *(keypoints[i]),  # cls, box or segments
+                        line = *(keypoints[i]),  # cls, box, keypoints
                     else:
                         line = *(segments[i] if use_segments and len(segments[i]) > 0 else bboxes[i]),  # cls, box or segments
                     file.write(('%g ' * len(line)).rstrip() % line + '\n')
