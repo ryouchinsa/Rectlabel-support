@@ -19,6 +19,22 @@ if(!successLoadModel){
   return 1;
 }
 ```
+
+After loading the model, the preprocessing for the image begins. Because of CPU mode, it takes 2 seconds for "MobileSAM", 30 seconds for "ViT-Large SAM", and 60 seconds for "ViT-Huge SAM" on the Apple M1 device.
+```cpp
+std::string imagePath = "david-tomaseti-Vw2HZQ1FGjU-unsplash.jpg";
+cv::Mat image = cv::imread(imagePath, cv::IMREAD_COLOR);
+auto inputSize = sam.getInputSize();
+cv::resize(image, image, inputSize);
+cv::imwrite("resized.jpg", image);
+bool terminated = false; // Check the preprocessing is terminated when the image is changed
+std::cout<<"preprocessImage started"<<std::endl;
+bool successPreprocessImage = sam.preprocessImage(image, &terminated);
+if(!successPreprocessImage){
+  std::cout<<"preprocessImage error"<<std::endl;
+  return 1;
+}
+```
 Build and run.
 ```bash
 cmake -S . -B build
