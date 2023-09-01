@@ -1,39 +1,15 @@
-## Segment Anything CPP Wrapper
+## Segment Anything CPP Wrapper for macOS
 
-This project is to create a pure C++ inference api for [Segment Anything](https://github.com/facebookresearch/segment-anything) and [MobileSAM](https://github.com/ChaoningZhang/MobileSAM), with no dependence on Python during runtime. The code repository contains a C++ library with a test program to facilitate easy integration of the interface into other projects.
+This code is originated from [Segment Anything CPP Wrapper](https://github.com/dinglufe/segment-anything-cpp-wrapper) and customized to use low_res_logits which is the previous mask result and to use CPU mode for macOS.
 
-Model loading takes approximately 10 or 1 seconds, and a single inference takes around 20ms, obtained using Intel Xeon W-2145 CPU (16 threads). During runtime, the interface may consume around 6GB or 1GB memory if running on CPU, and 16GB or 1GB if running on CUDA. The "or" here means values for "Segment Anything" or "MobileSAM".
-
-Currently, this program has been thoroughly tested on Windows and may encounter issues when running on Linux (no pre-compiled Linux version is provided).
-
-### Test program - sam_cpp_test
-![](demo.jpg)
-
-Video demo [link](https://youtu.be/6NyobtZoPKc)
-
-Image by <a href="https://pixabay.com/users/brenda2102-30343687/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=7918031">Brenda</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=7918031">Pixabay</a> and key recorded by [KeyCastOW](https://github.com/brookhong/KeyCastOW)
-
-Usage:
-
-Download compressed file in the release page, unzip it, and run sam_cpp_test directly or in command line:
+Download a zipped model file from
+[MobileSAM](https://huggingface.co/rectlabel/segment-anything-onnx-models/resolve/main/mobile_sam.zip), [ViT-Large SAM](https://huggingface.co/rectlabel/segment-anything-onnx-models/resolve/main/sam_vit_l_0b3195.zip), and [ViT-Huge SAM](https://huggingface.co/rectlabel/segment-anything-onnx-models/resolve/main/sam_vit_h_4b8939.zip).
+Put the unzipped model folder into sam-cpp-macos folder.
 
 ```bash
-# Show help
-./sam_cpp_test -h
-
-# Example (change device, use CPU for preprocess and CUDA for sam)
-# If you have multiple GPUs, you can use CUDA:1, CUDA:2, etc.
-# All in cpu or all in cuda is also supported
-./sam_cpp_test -pre_device="cpu" -sam_device="cuda:0"
-
-# Example (default options)
-./sam_cpp_test -pre_model="models/sam_preprocess.onnx" -sam_model="models/sam_vit_h_4b8939.onnx" -image="images/input.jpg"
-
-# Example (use MobileSAM)
-./sam_cpp_test -pre_model="models/mobile_sam_preprocess.onnx" -sam_model="models/mobile_sam.onnx"
-
-# Example (change image)
-./sam_cpp_test -image="images/input2.jpg"
+cmake -S . -B build
+cmake --build build
+./build/sam_cpp_test
 ```
 
 ### C++ library - sam_cpp_lib
