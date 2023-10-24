@@ -11,6 +11,7 @@ Thank you.
 
 # Key features
 - Label polygons using Segment Anything models
+- Label pixels using Segment Anything models
 - Label cubic bezier curves, line segments, and points
 - Label oriented bounding boxes in aerial images
 - Label keypoints with a skeleton
@@ -25,6 +26,7 @@ Thank you.
 
 # ScreenShots
 ![alt text](https://static.rectlabel.com/waysify_app/img/sam_polygon.jpg?)
+![alt text](https://static.rectlabel.com/waysify_app/img/sam_pixels.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/draw_polygon.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/edit_points.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/mask.jpg)
