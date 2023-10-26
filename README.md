@@ -11,6 +11,7 @@ Thank you.
 
 # Key features
 - Label polygons using Segment Anything models
+- Label pixels using Segment Anything models
 - Label cubic bezier curves, line segments, and points
 - Label oriented bounding boxes in aerial images
 - Label keypoints with a skeleton
@@ -24,20 +25,21 @@ Thank you.
 - Video to image frames, augment images, etc.
 
 # ScreenShots
-![alt text](https://static.rectlabel.com/waysify_app/img/sam_polygon.jpg)
+![alt text](https://static.rectlabel.com/waysify_app/img/sam_polygon.jpg?)
+![alt text](https://static.rectlabel.com/waysify_app/img/sam_pixels.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/draw_polygon.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/edit_points.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/mask.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/draw_obb.jpg?)
-![alt text](https://static.rectlabel.com/waysify_app/img/keypoints.jpg)
-![alt text](https://static.rectlabel.com/waysify_app/img/keypoints_pixels_coco.jpg)
+![alt text](https://static.rectlabel.com/waysify_app/img/keypoints.jpg?)
+![alt text](https://static.rectlabel.com/waysify_app/img/keypoints_pixels_coco.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/brush.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/superpixel.jpg)
-![alt text](https://static.rectlabel.com/waysify_app/img/coreml.jpg)
+![alt text](https://static.rectlabel.com/waysify_app/img/coreml.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/coreml_polygon.jpg)
-![alt text](https://static.rectlabel.com/waysify_app/img/coreml_seg.jpg)
+![alt text](https://static.rectlabel.com/waysify_app/img/coreml_seg.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/ocr.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/objects.jpg)
-![alt text](https://static.rectlabel.com/waysify_app/img/search.jpg)
+![alt text](https://static.rectlabel.com/waysify_app/img/search.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/video_to_frames.jpg)
-![alt text](https://static.rectlabel.com/waysify_app/img/augment.jpg?)
+![alt text](https://static.rectlabel.com/waysify_app/img/augment.jpg)
