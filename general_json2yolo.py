@@ -349,6 +349,8 @@ def show_kpt_shape_flip_idx(data):
 
 
 def rle2polygon(segmentation):
+    if isinstance(segmentation["counts"], list):
+        segmentation = mask.frPyObjects(segmentation, *segmentation["size"])
     m = mask.decode(segmentation) 
     m[m > 0] = 255
     contours, _ = cv2.findContours(m, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_TC89_KCOS)
@@ -437,8 +439,8 @@ if __name__ == '__main__':
 
     if source == 'COCO':
         convert_coco_json('../datasets/coco/annotations',  # directory with *.json
-                          use_segments=False,
-                          use_keypoints=True,
+                          use_segments=True,
+                          use_keypoints=False,
                           cls91to80=False)
 
     elif source == 'infolks':  # Infolks https://infolks.info/
