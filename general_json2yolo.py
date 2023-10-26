@@ -276,7 +276,8 @@ def convert_coco_json(json_dir='../coco/annotations/', use_segments=False, use_k
         for img_id, anns in tqdm(imgToAnns.items(), desc=f'Annotations {json_file}'):
             img = images['%g' % img_id]
             h, w, f = img['height'], img['width'], img['file_name']
-
+            f = f.split('/')[-1]
+            
             bboxes = []
             segments = []
             keypoints = []
