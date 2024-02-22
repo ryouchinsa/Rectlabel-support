@@ -25,10 +25,9 @@ Thank you.
 - Video to image frames, augment images, etc.
 
 # ScreenShots
-![alt text](https://static.rectlabel.com/waysify_app/img/draw_polygon_hole.jpg)
+![alt text](https://static.rectlabel.com/waysify_app/img/sam_polygon.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/mask_hole.jpg)
-![alt text](https://static.rectlabel.com/waysify_app/img/draw_polygon.jpg)
-![alt text](https://static.rectlabel.com/waysify_app/img/mask.jpg)
+![alt text](https://static.rectlabel.com/waysify_app/img/coreml.jpg)
 ![alt text](https://static.rectlabel.com/waysify_app/img/draw_obb.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/keypoints.jpg?)
 ![alt text](https://static.rectlabel.com/waysify_app/img/keypoints_pixels_coco.jpg?)
