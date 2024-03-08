@@ -251,7 +251,7 @@ def convert_ath_json(json_dir):  # dir contains json annotations and images
     print(f'Done. Output saved to {Path(dir).absolute()}')
 
 
-def convert_coco_json(json_dir='../coco/annotations/', use_segments=False, use_keypoints=False, cls91to80=False):
+def convert_coco_json(json_dir='../coco/annotations/', use_segments=False, use_keypoints=False, cls91to80=False, category_id_starts_from_0=False):
     save_dir = make_dirs()  # output directory
     coco80 = coco91_to_coco80_class()
 
@@ -293,7 +293,10 @@ def convert_coco_json(json_dir='../coco/annotations/', use_segments=False, use_k
                 if box[2] <= 0 or box[3] <= 0:  # if w <= 0 and h <= 0
                     continue
 
-                cls = coco80[ann['category_id'] - 1] if cls91to80 else ann['category_id'] - 1  # class
+                if category_id_starts_from_0:
+                    cls = ann['category_id']
+                else:
+                    cls = coco80[ann['category_id'] - 1] if cls91to80 else ann['category_id'] - 1  # class
                 box = [cls] + box.tolist()
                 if box not in bboxes:
                     bboxes.append(box)
@@ -324,19 +327,27 @@ def convert_coco_json(json_dir='../coco/annotations/', use_segments=False, use_k
             # Write
             with open((fn / f).with_suffix('.txt'), 'a') as file:
                 for i in range(len(bboxes)):
-                    if use_keypoints:
-                        line = *(keypoints[i]),  # cls, box, keypoints
-                    else:
-                        line = *(segments[i] if use_segments and len(segments[i]) > 0 else bboxes[i]),  # cls, box or segments
-                    file.write(('%g ' * len(line)).rstrip() % line + '\n')
+                    count = 0
+                    if use_keypoints and len(keypoints[i]) > 0:
+                        line = *(keypoints[i]),
+                        file.write(('%g ' * len(line)).rstrip() % line + '\n')
+                        count += 1
+                    if use_segments and len(segments[i]) > 0:
+                        line = *(segments[i]),
+                        file.write(('%g ' * len(line)).rstrip() % line + '\n')
+                        count += 1
+                    if count == 0:
+                        line = *(bboxes[i]),
+                        file.write(('%g ' * len(line)).rstrip() % line + '\n')
 
 def bbox_from_keypoints(ann):
-    if 'keypoints' not in ann:
-        return
-    k = np.array(ann['keypoints']).reshape(-1, 3)
-    x_list, y_list, v_list = zip(*k)
-    box = [min(x_list), min(y_list), max(x_list) - min(x_list), max(y_list) - min(y_list)]
-    return np.array(box, dtype=np.float64)
+    if 'keypoints' in ann:
+        k = np.array(ann['keypoints']).reshape(-1, 3)
+        x_list, y_list, v_list = zip(*k)
+        box = [min(x_list), min(y_list), max(x_list) - min(x_list), max(y_list) - min(y_list)]
+        return np.array(box, dtype=np.float64)
+    else:
+        return [0, 0, 0, 0]
 
 def show_kpt_shape_flip_idx(data):
     for category in data['categories']:
@@ -370,7 +381,7 @@ def is_clockwise(contour):
             p2 = contour[i + 1]
         else:
             p2 = contour[0]
-        value += (p2[0][0] - p1[0][0]) * (p2[0][1] + p1[0][1]);
+        value += (p2[0][0] - p1[0][0]) * (p2[0][1] + p1[0][1])
     return value < 0
 
 def get_merge_point_idx(contour1, contour2):
@@ -379,7 +390,7 @@ def get_merge_point_idx(contour1, contour2):
     distance_min = -1
     for i, p1 in enumerate(contour1):
         for j, p2 in enumerate(contour2):
-            distance = pow(p2[0][0] - p1[0][0], 2) + pow(p2[0][1] - p1[0][1], 2);
+            distance = pow(p2[0][0] - p1[0][0], 2) + pow(p2[0][1] - p1[0][1], 2)
             if distance_min < 0:
                 distance_min = distance
                 idx1 = i
@@ -533,8 +544,9 @@ if __name__ == '__main__':
     if source == 'COCO':
         convert_coco_json('../datasets/coco/annotations',  # directory with *.json
                           use_segments=True,
-                          use_keypoints=False,
-                          cls91to80=False)
+                          use_keypoints=True,
+                          cls91to80=False,
+                          category_id_starts_from_0=False)
 
     elif source == 'infolks':  # Infolks https://infolks.info/
         convert_infolks_json(name='out',
