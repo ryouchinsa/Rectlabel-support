@@ -2,9 +2,6 @@
 This is the support page for RectLabel.
 https://apps.apple.com/app/id1210181730
 
-Post the problem to our Github issues page.
-https://github.com/ryouchinsa/Rectlabel-support/issues
-
 Have questions? Send an email to support@rectlabel.com.
 
 Thank you.
