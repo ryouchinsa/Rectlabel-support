@@ -251,7 +251,7 @@ def convert_ath_json(json_dir):  # dir contains json annotations and images
     print(f'Done. Output saved to {Path(dir).absolute()}')
 
 
-def convert_coco_json(json_dir='../coco/annotations/', use_segments=False, use_keypoints=False, cls91to80=False, category_id_starts_from_0=False):
+def convert_coco_json(json_dir='../coco/annotations/', use_segments=False, use_keypoints=False, rle_to_polygons_holes=False, save_rle_masks=False, cls91to80=False, category_id_starts_from_0=False):
     save_dir = make_dirs()  # output directory
     coco80 = coco91_to_coco80_class()
 
@@ -298,31 +298,9 @@ def convert_coco_json(json_dir='../coco/annotations/', use_segments=False, use_k
                 else:
                     cls = coco80[ann['category_id'] - 1] if cls91to80 else ann['category_id'] - 1  # class
                 box = [cls] + box.tolist()
-                if box not in bboxes:
-                    bboxes.append(box)
-                if use_segments:
-                    if len(ann['segmentation']) == 0:
-                        segments.append([])
-                        continue
-                    if isinstance(ann['segmentation'], dict):
-                        ann['segmentation'] = rle2polygon(ann['segmentation'])
-                    if len(ann['segmentation']) > 1:
-                        s = merge_multi_segment(ann['segmentation'])
-                        s = (np.concatenate(s, axis=0) / np.array([w, h])).reshape(-1).tolist()
-                    else:
-                        s = [j for i in ann['segmentation'] for j in i]  # all segments concatenated
-                        s = (np.array(s).reshape(-1, 2) / np.array([w, h])).reshape(-1).tolist()
-                    s = [cls] + s
-                    if s not in segments:
-                        segments.append(s)
-                if use_keypoints:
-                    if 'keypoints' not in ann:
-                        keypoints.append([])
-                        continue
-                    else:
-                        k = (np.array(ann['keypoints']).reshape(-1, 3) / np.array([w, h, 1])).reshape(-1).tolist()
-                        k = box + k
-                        keypoints.append(k)
+                bboxes.append(box)
+                set_coco_segments(use_segments, rle_to_polygons_holes, save_rle_masks, w, h, f, fn, ann, cls, segments)
+                set_coco_keypoints(use_keypoints, w, h, f, fn, ann, box, keypoints)
 
             # Write
             with open((fn / f).with_suffix('.txt'), 'a') as file:
@@ -339,6 +317,40 @@ def convert_coco_json(json_dir='../coco/annotations/', use_segments=False, use_k
                     if count == 0:
                         line = *(bboxes[i]),
                         file.write(('%g ' * len(line)).rstrip() % line + '\n')
+
+def set_coco_segments(use_segments, rle_to_polygons_holes, save_rle_masks, w, h, f, fn, ann, cls, segments):
+    if not use_segments:
+        return
+    if len(ann['segmentation']) == 0:
+        segments.append([])
+        return
+    if isinstance(ann['segmentation'], dict):
+        file_name = f.split('.')[0]
+        file_name = file_name + '_' + str(len(segments)) + '.png'
+        mask_path = (fn / file_name)
+        ann['segmentation'] = rle2polygon(ann['segmentation'], rle_to_polygons_holes, save_rle_masks, mask_path)
+        if len(ann['segmentation']) == 0:
+            segments.append([])
+            return
+    if len(ann['segmentation']) > 1:
+        s = merge_multi_segment(ann['segmentation'])
+        s = (np.concatenate(s, axis=0) / np.array([w, h])).reshape(-1).tolist()
+    else:
+        s = [j for i in ann['segmentation'] for j in i]  # all segments concatenated
+        s = (np.array(s).reshape(-1, 2) / np.array([w, h])).reshape(-1).tolist()
+    s = [cls] + s
+    segments.append(s)
+
+def set_coco_keypoints(use_keypoints, w, h, f, fn, ann, box, keypoints):
+    if not use_keypoints:
+        return
+    if 'keypoints' not in ann:
+        keypoints.append([])
+        return
+    else:
+        k = (np.array(ann['keypoints']).reshape(-1, 3) / np.array([w, h, 1])).reshape(-1).tolist()
+        k = box + k
+        keypoints.append(k)
 
 def bbox_from_keypoints(ann):
     if 'keypoints' in ann:
@@ -422,15 +434,31 @@ def merge_with_parent(contour_parent, contour):
     idx1, idx2 = get_merge_point_idx(contour_parent, contour)
     return merge_contours(contour_parent, contour, idx1, idx2)
 
-def mask2polygon(image):
-    contours, hierarchies = cv2.findContours(image, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_TC89_KCOS)
+def mask2polygon_external(image):
+    contours, hierarchies = cv2.findContours(image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_TC89_KCOS)
+    if len(contours) == 0:
+        return []
     contours_approx = []
-    polygons = []
     for contour in contours:
         epsilon = 0.001 * cv2.arcLength(contour, True)
         contour_approx = cv2.approxPolyDP(contour, epsilon, True)
         contours_approx.append(contour_approx)
+    polygons = []
+    for contour in contours_approx:
+        if len(contour) >= 3:
+            polygon = contour.flatten().tolist()
+            polygons.append(polygon)
+    return polygons 
 
+def mask2polygon_holes(image):
+    contours, hierarchies = cv2.findContours(image, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_TC89_KCOS)
+    if len(contours) == 0:
+        return []
+    contours_approx = []
+    for contour in contours:
+        epsilon = 0.001 * cv2.arcLength(contour, True)
+        contour_approx = cv2.approxPolyDP(contour, epsilon, True)
+        contours_approx.append(contour_approx)
     contours_parent = []
     for i, contour in enumerate(contours_approx):
         parent_idx = hierarchies[0][i][3]
@@ -438,7 +466,6 @@ def mask2polygon(image):
             contours_parent.append(contour)
         else:
             contours_parent.append([])
-
     for i, contour in enumerate(contours_approx):
         parent_idx = hierarchies[0][i][3]
         if parent_idx >= 0 and len(contour) >= 3:
@@ -446,25 +473,30 @@ def mask2polygon(image):
             if len(contour_parent) == 0:
                 continue
             contours_parent[parent_idx] = merge_with_parent(contour_parent, contour)
-
     contours_parent_tmp = []
     for contour in contours_parent:
         if len(contour) == 0:
             continue
         contours_parent_tmp.append(contour)
-
     polygons = []
     for contour in contours_parent_tmp:
         polygon = contour.flatten().tolist()
         polygons.append(polygon)
     return polygons 
 
-def rle2polygon(segmentation):
+def rle2polygon(segmentation, rle_to_polygons_holes, save_rle_masks, mask_path):
     if isinstance(segmentation["counts"], list):
         segmentation = mask.frPyObjects(segmentation, *segmentation["size"])
     m = mask.decode(segmentation) 
     m[m > 0] = 255
-    polygons = mask2polygon(m)
+    if save_rle_masks:
+        import PIL.Image
+        pil_image = PIL.Image.fromarray(m)
+        pil_image.save(mask_path)
+    if rle_to_polygons_holes:
+        polygons = mask2polygon_holes(m)
+    else:
+        polygons = mask2polygon_external(m)
     return polygons
 
 def min_index(arr1, arr2):
@@ -544,7 +576,9 @@ if __name__ == '__main__':
     if source == 'COCO':
         convert_coco_json('../datasets/coco/annotations',  # directory with *.json
                           use_segments=True,
-                          use_keypoints=True,
+                          use_keypoints=False,
+                          rle_to_polygons_holes=True,
+                          save_rle_masks=False,
                           cls91to80=False,
                           category_id_starts_from_0=False)
 
