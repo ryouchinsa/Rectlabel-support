@@ -251,7 +251,7 @@ def convert_ath_json(json_dir):  # dir contains json annotations and images
     print(f'Done. Output saved to {Path(dir).absolute()}')
 
 
-def convert_coco_json(json_dir='../coco/annotations/', use_segments=False, use_keypoints=False, rle_to_polygons_holes=False, save_rle_masks=False, cls91to80=False, category_id_starts_from_0=False):
+def convert_coco_json(json_dir='../coco/annotations/', use_segments=False, use_keypoints=False, skip_iscrowd_1=False, rle_to_polygons_holes=False, save_rle_masks=False, cls91to80=False, category_id_starts_from_0=False):
     save_dir = make_dirs()  # output directory
     coco80 = coco91_to_coco80_class()
 
@@ -282,6 +282,8 @@ def convert_coco_json(json_dir='../coco/annotations/', use_segments=False, use_k
             segments = []
             keypoints = []
             for ann in anns:
+                if skip_iscrowd_1 and ann["iscrowd"]:
+                    continue
                 # The COCO box format is [top left x, top left y, width, height]
                 if len(ann['bbox']) == 0:
                     box = bbox_from_keypoints(ann)
@@ -577,7 +579,8 @@ if __name__ == '__main__':
         convert_coco_json('../datasets/coco/annotations',  # directory with *.json
                           use_segments=True,
                           use_keypoints=False,
-                          rle_to_polygons_holes=True,
+                          skip_iscrowd_1=True,
+                          rle_to_polygons_holes=False,
                           save_rle_masks=False,
                           cls91to80=False,
                           category_id_starts_from_0=False)
