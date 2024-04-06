@@ -366,6 +366,8 @@ def bbox_from_keypoints(ann):
         return [0, 0, 0, 0]
 
 def show_kpt_shape_flip_idx(data):
+    if 'categories' not in data:
+        return
     for category in data['categories']:
         if 'keypoints' not in category:
             continue
@@ -580,8 +582,8 @@ if __name__ == '__main__':
     if source == 'COCO':
         convert_coco_json('../datasets/coco/annotations',  # directory with *.json
                           use_segments=True,
-                          use_keypoints=False,
-                          skip_iscrowd_1=True,
+                          use_keypoints=True,
+                          skip_iscrowd_1=False,
                           rle_to_polygons_holes=False,
                           save_rle_masks=False,
                           cls91to80=True,
