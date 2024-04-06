@@ -282,10 +282,12 @@ def convert_coco_json(json_dir='../coco/annotations/', use_segments=False, use_k
             segments = []
             keypoints = []
             for ann in anns:
-                if skip_iscrowd_1 and ann["iscrowd"]:
+                if skip_iscrowd_1 and "iscrowd" in ann and ann["iscrowd"]:
                     continue
                 # The COCO box format is [top left x, top left y, width, height]
-                if len(ann['bbox']) == 0:
+                if 'bbox' not in ann:
+                    continue
+                elif len(ann['bbox']) == 0:
                     box = bbox_from_keypoints(ann)
                 else:
                     box = np.array(ann['bbox'], dtype=np.float64)
@@ -582,7 +584,7 @@ if __name__ == '__main__':
                           skip_iscrowd_1=True,
                           rle_to_polygons_holes=False,
                           save_rle_masks=False,
-                          cls91to80=False,
+                          cls91to80=True,
                           category_id_starts_from_0=False)
 
     elif source == 'infolks':  # Infolks https://infolks.info/
