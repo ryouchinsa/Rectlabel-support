@@ -325,6 +325,9 @@ def convert_coco_json(json_dir='../coco/annotations/', use_segments=False, use_k
 def set_coco_segments(use_segments, rle_to_polygons_holes, save_rle_masks, w, h, f, fn, ann, cls, segments):
     if not use_segments:
         return
+    if 'segmentation' not in ann:
+        segments.append([])
+        return
     if len(ann['segmentation']) == 0:
         segments.append([])
         return
@@ -349,6 +352,9 @@ def set_coco_keypoints(use_keypoints, w, h, f, fn, ann, box, keypoints):
     if not use_keypoints:
         return
     if 'keypoints' not in ann:
+        keypoints.append([])
+        return
+    if len(ann['keypoints']) == 0:
         keypoints.append([])
         return
     else:
@@ -586,7 +592,7 @@ if __name__ == '__main__':
                           skip_iscrowd_1=False,
                           rle_to_polygons_holes=False,
                           save_rle_masks=False,
-                          cls91to80=True,
+                          cls91to80=False,
                           category_id_starts_from_0=False)
 
     elif source == 'infolks':  # Infolks https://infolks.info/
