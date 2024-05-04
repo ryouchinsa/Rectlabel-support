@@ -4,6 +4,7 @@ import skimage.io as io
 import matplotlib.pyplot as plt
 import pylab
 import pprint
+import os
 pp = pprint.PrettyPrinter(indent=2)
 pylab.rcParams['figure.figsize'] = (8.0, 10.0)
 
@@ -16,7 +17,8 @@ catIds = list(range(1, 256))
 imgIds = coco.getImgIds();
 img = coco.loadImgs(imgIds[imageIdToShow])[0]
 
-I = io.imread(imgFolder + '/' + img['file_name'])
+imgFolder = os.path.join(imgFolder, '')
+I = io.imread(imgFolder + img['file_name'])
 plt.axis('off')
 plt.imshow(I);
 annIds = coco.getAnnIds(imgIds=img['id'], catIds=catIds, iscrowd=None)
