@@ -8,7 +8,7 @@ To download RectLabel apps.
 How to use? Read our [Help page](https://rectlabel.com/help/).
 
 # Key features
-- Label polygons and pixels using Segment Anything models
+- Label polygons and pixels using Segment Anything Model 2
 - Automatic labeling using Core ML models
 - Automatic text recognition for lines and words
 - Label cubic bezier curves, line segments, and points
@@ -21,12 +21,13 @@ How to use? Read our [Help page](https://rectlabel.com/help/).
 - Export indexed color mask image and grayscale mask images
 - Video to image frames, augment images, etc.
 
-![sam_polygon](https://github.com/ryouchinsa/ryouchinsa.github.io/assets/1954306/8ffe1c7e-830c-4a80-8b09-634f0d35c86a)
-![sam_pixels](https://github.com/ryouchinsa/ryouchinsa.github.io/assets/1954306/c110f813-c249-4de3-92af-73c721fbd4b9)
+![sam2_polygon](https://github.com/user-attachments/assets/2b971666-1d62-413b-a09a-9b45a881754b)
+![sam2_pixels](https://github.com/user-attachments/assets/307f5450-cadd-413b-9b84-8de702b8d4dc)
 ![coreml_polygon](https://github.com/ryouchinsa/ryouchinsa.github.io/assets/1954306/d6e280ab-d55f-41e4-8eb4-2e098001020e)
 ![ocr](https://github.com/ryouchinsa/ryouchinsa.github.io/assets/1954306/e1d6899f-9de3-4914-a65e-3886fddb3046)
 ![draw_obb](https://github.com/ryouchinsa/ryouchinsa.github.io/assets/1954306/422819be-3fca-46b0-850c-6aa2f60df30c)
 ![search4](https://github.com/ryouchinsa/Rectlabel-support/assets/1954306/26267845-11d4-4bfe-8531-60a8035cdac4)
+
 
 
 
