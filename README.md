@@ -20,7 +20,7 @@ How to use? Read our [Help page](https://rectlabel.com/help/).
 - Export to COCO, Labelme, CreateML, YOLO, and DOTA formats
 - Export indexed color mask image and grayscale mask images
 - Video to image frames, augment images, etc.
-- 
+
 ![sam2_polygon](https://github.com/user-attachments/assets/573d0b14-03a8-4853-9e2c-6c831219622e)
 ![sam2_pixels](https://github.com/user-attachments/assets/307f5450-cadd-413b-9b84-8de702b8d4dc)
 ![coreml_polygon](https://github.com/ryouchinsa/ryouchinsa.github.io/assets/1954306/d6e280ab-d55f-41e4-8eb4-2e098001020e)
