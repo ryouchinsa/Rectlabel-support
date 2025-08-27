@@ -7,6 +7,8 @@ To download RectLabel apps.
 
 How to use? Read our [Help page](https://rectlabel.com/help/).
 
+Post feature requests to [Issues page](https://github.com/ryouchinsa/Rectlabel-support/issues).
+
 # Key features
 - Label polygons and pixels using Segment Anything Model 2
 - Automatic labeling using Core ML models
