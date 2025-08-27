@@ -9,6 +9,8 @@ How to use? Read our [Help page](https://rectlabel.com/help/).
 
 Post feature requests to [Issues page](https://github.com/ryouchinsa/Rectlabel-support/issues).
 
+Have questions? Send an email to support@rectlabel.com.
+
 # Key features
 - Label polygons and pixels using Segment Anything Model 2
 - Automatic labeling using Core ML models
