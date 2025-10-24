@@ -13,7 +13,8 @@ Have questions? Send an email to support@rectlabel.com.
 
 # Key features
 - Label polygons and pixels using Segment Anything Model 2
-- Label polygons and pixels using Cellpose ONNX models
+- Label polygons and pixels using Cellpose model
+- Label bounding boxes using Tracking model
 - Automatic labeling using Core ML models
 - Automatic text recognition for lines and words
 - Label cubic bezier curves, line segments, and points
