@@ -32,7 +32,7 @@ Have questions? Send an email to support@rectlabel.com.
 ![cellpose_polygon](https://github.com/user-attachments/assets/2e50d051-3b6d-4799-ab5e-3e4f224fc117)
 ![coreml_polygon](https://github.com/user-attachments/assets/69f71ba4-0db8-4840-9dcc-0f0b360ef12e)
 ![ocr](https://github.com/user-attachments/assets/92916a99-26f2-42f7-9eee-40a763c7adab)
-![draw_obb](https://github.com/user-attachments/assets/73811e6c-e5eb-4aec-b37f-0d6250bf3c76)
+![draw_obb](https://github.com/user-attachments/assets/430a45ad-078b-4a58-b13e-5657a832d2a0)
 ![search5](https://github.com/user-attachments/assets/52279522-e97b-450c-9315-64b08ef4c569)
 
 
