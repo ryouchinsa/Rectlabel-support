@@ -12,6 +12,7 @@ Post feature requests to [Issues page](https://github.com/ryouchinsa/Rectlabel-s
 Have questions? Send an email to support@rectlabel.com.
 
 # Key features
+- Using text and box prompts of Segment Anything Model 3, multiple objects are labeled at once
 - Label polygons and pixels using Segment Anything Model 2
 - Label polygons and pixels using Cellpose model
 - Label bounding boxes using Tracking model
@@ -27,6 +28,8 @@ Have questions? Send an email to support@rectlabel.com.
 - Export indexed color mask image and grayscale mask images
 - Video to image frames, augment images, etc.
 
+![sam3_polygon](https://github.com/user-attachments/assets/95f53618-1d23-4f53-be55-eac4cc89ca12)
+![sam3_pixels](https://github.com/user-attachments/assets/cab8d7a6-b5cb-48cf-84cd-2683d5f15664)
 ![sam2_polygon](https://github.com/user-attachments/assets/1ff23220-a92f-42e0-afba-eb909f454832)
 ![sam2_pixels](https://github.com/user-attachments/assets/22f9ae41-c698-4685-bf0d-5358a2056aa8)
 ![cellpose_polygon](https://github.com/user-attachments/assets/2e50d051-3b6d-4799-ab5e-3e4f224fc117)
