@@ -16,7 +16,7 @@ Have questions? Send an email to support@rectlabel.com.
 - Label polygons and pixels using Segment Anything Model 2
 - Label polygons and pixels using Cellpose model
 - Label bounding boxes using Tracking model
-- Automatic labeling using Core ML models
+- Automatic labeling using Core ML models including RF-DETR and YOLO26
 - Automatic text recognition for lines and words
 - Label cubic bezier curves, line segments, and points
 - Label oriented bounding boxes in aerial images
@@ -24,7 +24,7 @@ Have questions? Send an email to support@rectlabel.com.
 - Label pixels with brushes and superpixels
 - Settings for objects, attributes, hotkeys, and labeling fast
 - Search object, attribute, image names, and memo in a gallery view
-- Export to COCO, Labelme, CreateML, YOLO, and DOTA formats
+- Export to YOLO, COCO, CreateML, and DOTA formats
 - Export indexed color mask image and grayscale mask images
 - Video to image frames, augment images, etc.
 
