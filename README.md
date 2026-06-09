@@ -9,7 +9,7 @@ How to use? Read our [Help page](https://rectlabel.com/help/).
 
 Post feature requests to [Issues page](https://github.com/ryouchinsa/Rectlabel-support/issues).
 
-Have questions? Send an email to support@rectlabel.com.
+If you need to implement RectLabel-like app in your system, please contact us. support@rectlabel.com
 
 # Key features
 - Using text and box prompts of Segment Anything Model 3, multiple objects are labeled at once
